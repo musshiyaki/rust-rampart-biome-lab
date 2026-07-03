@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Rust & Rampart Sulfur Valley biome parameter editor with live 3D preview and JSON export."
+    />
+    <title>Rust & Rampart Biome Lab</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <main class="preview-pane" aria-label="Biome preview">
+        <div class="topbar">
+          <div>
+            <p class="eyebrow">Rust &amp; Rampart</p>
+            <h1 data-i18n="appTitle">Biome Lab</h1>
+          </div>
+          <div class="topbar-actions">
+            <label class="select-label" for="languageSelect" data-i18n="languageLabel">Language</label>
+            <select id="languageSelect" class="pixel-select" aria-label="Language">
+              <option value="ja">日本語</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+        </div>
+
+        <section id="previewViewport" class="preview-viewport">
+          <div class="preview-loading" id="previewLoading" data-i18n="previewLoading">Loading 3D preview...</div>
+          <div class="preview-hud">
+            <span id="previewStatus" data-i18n="previewReady">Preview ready</span>
+            <span id="previewStats">0 blocks</span>
+          </div>
+        </section>
+
+        <section class="output-panel" aria-labelledby="outputTitle">
+          <div class="output-header">
+            <h2 id="outputTitle" data-i18n="jsonTitle">Generated JSON</h2>
+            <div class="button-row">
+              <button id="copyButton" class="pixel-button secondary" type="button" data-i18n="copyJson">Copy</button>
+              <button id="downloadButton" class="pixel-button secondary" type="button" data-i18n="downloadJson">Download</button>
+              <button id="shareButton" class="pixel-button secondary" type="button" data-i18n="share">Share</button>
+            </div>
+          </div>
+          <textarea
+            id="jsonOutput"
+            class="json-output"
+            spellcheck="false"
+            aria-label="Generated JSON"
+            readonly
+          ></textarea>
+        </section>
+      </main>
+
+      <aside class="control-pane" aria-label="Biome parameters">
+        <div class="control-header">
+          <div>
+            <p class="eyebrow" id="targetVersion">Minecraft 1.21.11 / MOD 0.1.0</p>
+            <h2 data-i18n="parametersTitle">Parameters</h2>
+          </div>
+          <label class="toggle">
+            <input id="instantToggle" type="checkbox" />
+            <span data-i18n="instantMode">Instant generation</span>
+          </label>
+        </div>
+
+        <div class="action-grid">
+          <button id="generateButton" class="pixel-button primary" type="button" data-i18n="generate">Generate</button>
+          <button id="resetButton" class="pixel-button" type="button" data-i18n="reset">Reset</button>
+        </div>
+
+        <div id="dirtyNotice" class="dirty-notice" hidden data-i18n="dirtyNotice">
+          Changes are waiting. Press Generate to update the preview.
+        </div>
+
+        <div id="parameterSections" class="parameter-sections">
+          <div class="boot-notice">
+            <strong>Parameters load automatically below this area.</strong>
+            <span>
+              If this message stays visible, open the app through GitHub Pages or a local server such as
+              <code>python3 -m http.server 4173 --directory docs/biome-lab</code>, then visit
+              <code>http://localhost:4173</code>. Browser module imports do not run from direct
+              <code>file://</code> opens.
+            </span>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <dialog id="blockDialog" class="block-dialog">
+      <form method="dialog" class="dialog-shell">
+        <div class="dialog-header">
+          <div>
+            <p class="eyebrow" data-i18n="blockPickerEyebrow">Creative Inventory</p>
+            <h2 data-i18n="blockPickerTitle">Choose Block</h2>
+          </div>
+          <button class="icon-button" value="cancel" aria-label="Close" type="submit">x</button>
+        </div>
+
+        <div class="block-toolbar">
+          <input id="blockSearch" class="pixel-input" type="search" autocomplete="off" data-i18n-placeholder="searchBlocks" />
+        </div>
+
+        <div class="resource-texture-box">
+          <label>
+            <span data-i18n="resourceTextureTitle">Load vanilla/resource-pack block textures</span>
+            <input
+              id="resourceTextureInput"
+              class="pixel-input file-input"
+              type="file"
+              accept="image/png"
+              multiple
+              webkitdirectory
+            />
+          </label>
+          <p id="resourceTextureStatus" data-i18n="resourceTextureHelp">
+            Select an extracted resource pack folder that contains assets/minecraft/textures/block.
+          </p>
+        </div>
+
+        <div id="blockTabs" class="block-tabs" role="tablist"></div>
+        <div id="blockGrid" class="block-grid"></div>
+
+        <fieldset class="custom-block-box">
+          <legend data-i18n="customBlockTitle">Load MOD block texture</legend>
+          <div class="custom-block-grid">
+            <label>
+              <span data-i18n="customBlockId">Block id</span>
+              <input id="customBlockId" class="pixel-input" type="text" placeholder="examplemod:ash_stone" />
+            </label>
+            <label>
+              <span data-i18n="customBlockName">Display name</span>
+              <input id="customBlockName" class="pixel-input" type="text" placeholder="Ash Stone" />
+            </label>
+            <label>
+              <span data-i18n="customBlockTexture">Texture PNG</span>
+              <input id="customBlockTexture" class="pixel-input file-input" type="file" accept="image/png,image/webp,image/jpeg" />
+            </label>
+            <button id="addCustomBlock" class="pixel-button secondary" type="button" data-i18n="addCustomBlock">Add block</button>
+          </div>
+        </fieldset>
+      </form>
+    </dialog>
+
+    <div id="blockTooltip" class="block-tooltip" role="tooltip" hidden></div>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
