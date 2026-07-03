@@ -30,6 +30,7 @@ The preview is an original approximation written for this project. It does not i
 - Creative-inventory-style block picker
 - Search by block id or display name
 - Hover tooltips for block names and ids
+- Full-coverage extension fields for arbitrary data pack, Forge, NeoForge, and Fabric handoff JSON
 - Local resource-pack texture loading for vanilla block icons
 - Bundled sample MOD block textures for the current target profile
 - Static GitHub Pages deployment, no backend required
@@ -55,6 +56,12 @@ The public app is positioned as a biome lab for Minecraft mods. Version `0.1.0` 
 | Loader context | Fabric-oriented worldgen data |
 
 Future versions can add named target profiles, datapack import/export, custom schema loading, and additional Minecraft versions.
+
+## Parameter Coverage
+
+The fixed controls cover the current Rust & Rampart target profile's main biome/worldgen values. The **Full Coverage Mode / Extra JSON** section can carry arbitrary additional data pack files plus Forge, NeoForge, and Fabric handoff JSON so new or loader-specific fields are not blocked by the fixed UI.
+
+See [Parameter Coverage](docs/parameter-coverage.md) for the current coverage matrix and the path toward schema-driven coverage.
 
 ## How to Use
 
@@ -95,6 +102,7 @@ The JSON output includes Minecraft data files plus a handoff object for implemen
 - configured features for the sample biome worldgen profile
 - placed features for basin, spring, vent field, vent halo, and shard field
 - implementation handoff parameters that mirror the current Java constants
+- extra user-provided data pack files and loader-specific extension JSON when supplied
 
 Some parameters represent current hard-coded Java worldgen constants. They are exported as a practical handoff object so the values can be copied back into the mod implementation.
 

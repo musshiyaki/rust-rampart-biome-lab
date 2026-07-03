@@ -435,6 +435,12 @@ const DEFAULT_STATE = {
     cluster_spacing_min: 6,
     foundation_scan_depth: 6,
   },
+  extensions: {
+    datapack_files: {},
+    forge_biome_modifiers: {},
+    neoforge_biome_modifiers: {},
+    fabric_biome_modifications: {},
+  },
   customBlocks: [],
 };
 
@@ -780,6 +786,32 @@ const PARAM_SECTIONS = [
       range("shards.sub_taper_power", "SUB_TAPER_POWER - 副結晶テーパー", "SUB_TAPER_POWER - Sub taper power", 0.5, 4, 0.05),
       range("shards.cluster_spacing_min", "MIN_CLUSTER_SPACING - 結晶クラスタ間隔", "MIN_CLUSTER_SPACING - Min cluster spacing", 0, 24, 1),
       range("shards.foundation_scan_depth", "FOUNDATION_SCAN_DEPTH - 土台探索深さ", "FOUNDATION_SCAN_DEPTH - Foundation scan depth", 0, 24, 1),
+    ],
+  },
+  {
+    id: "extensions",
+    title: { ja: "全網羅モード / 追加JSON", en: "Full Coverage Mode / Extra JSON" },
+    controls: [
+      json(
+        "extensions.datapack_files",
+        "data pack files - 任意のworldgen/data JSONファイル",
+        "data pack files - Arbitrary worldgen/data JSON files"
+      ),
+      json(
+        "extensions.forge_biome_modifiers",
+        "Forge biome modifiers - Forge用バイオーム修飾JSON",
+        "Forge biome modifiers - Forge biome modifier JSON"
+      ),
+      json(
+        "extensions.neoforge_biome_modifiers",
+        "NeoForge biome modifiers - NeoForge用バイオーム修飾JSON",
+        "NeoForge biome modifiers - NeoForge biome modifier JSON"
+      ),
+      json(
+        "extensions.fabric_biome_modifications",
+        "Fabric biome modifications - Fabric実装引き継ぎメモJSON",
+        "Fabric biome modifications - Fabric implementation handoff JSON"
+      ),
     ],
   },
 ];
@@ -1384,6 +1416,10 @@ function buildExport(source) {
     }
   }
 
+  appendExtraFiles(files, normalized.extensions?.datapack_files);
+  appendNamedJsonFiles(files, `data/${TARGET.modId}/forge/biome_modifier`, normalized.extensions?.forge_biome_modifiers);
+  appendNamedJsonFiles(files, `data/${TARGET.modId}/neoforge/biome_modifier`, normalized.extensions?.neoforge_biome_modifiers);
+
   return {
     target: {
       minecraft_version: normalized.meta.minecraft_version,
@@ -1392,6 +1428,11 @@ function buildExport(source) {
       biome_id: normalized.biome.id,
     },
     files,
+    loader_extensions: {
+      forge_biome_modifiers: normalized.extensions?.forge_biome_modifiers || {},
+      neoforge_biome_modifiers: normalized.extensions?.neoforge_biome_modifiers || {},
+      fabric_biome_modifications: normalized.extensions?.fabric_biome_modifications || {},
+    },
     "rust_rampart:generator_parameters": {
       note: "Values in this object mirror the current hard-coded Rust & Rampart 0.1.0 worldgen constants for implementation handoff.",
       preview: normalized.preview,
@@ -1406,6 +1447,24 @@ function buildExport(source) {
       custom_blocks: normalized.customBlocks.map(({ id, name, color }) => ({ id, name, color })),
     },
   };
+}
+
+function appendExtraFiles(files, entries) {
+  if (!entries || typeof entries !== "object" || Array.isArray(entries)) return;
+  for (const [path, content] of Object.entries(entries)) {
+    const cleanPath = String(path).replace(/^\/+/, "");
+    if (!cleanPath || cleanPath.includes("..")) continue;
+    files[cleanPath] = content;
+  }
+}
+
+function appendNamedJsonFiles(files, directory, entries) {
+  if (!entries || typeof entries !== "object" || Array.isArray(entries)) return;
+  for (const [id, content] of Object.entries(entries)) {
+    const cleanId = String(id).replace(/^\/+/, "").replace(/\.json$/i, "");
+    if (!cleanId || cleanId.includes("..")) continue;
+    files[`${directory}/${cleanId}.json`] = content;
+  }
 }
 
 function buildBiomeJson(source) {
