@@ -8,6 +8,8 @@ const TARGET = {
   biomeId: "rust_rampart:sulfur_valley",
 };
 
+const PREVIEW_WORLD_PADDING = 2.55;
+
 const I18N = {
   ja: {
     appTitle: "Biome Lab",
@@ -230,7 +232,7 @@ const DEFAULT_STATE = {
   },
   preview: {
     seed: 260518,
-    size: 56,
+    size: 72,
     verticalScale: 1.05,
     biomeCoverage: 1,
   },
@@ -527,7 +529,7 @@ const PARAM_SECTIONS = [
     title: { ja: "対象とプレビュー", en: "Target and Preview" },
     controls: [
       range("preview.seed", "preview.seed - 乱数シード", "preview.seed - Random seed", 1, 999999, 1),
-      range("preview.size", "preview.size - プレビュー範囲", "preview.size - Preview size", 32, 96, 8),
+      range("preview.size", "preview.size - プレビュー範囲", "preview.size - Preview size", 32, 128, 8),
       range("preview.verticalScale", "preview.verticalScale - 高さ倍率", "preview.verticalScale - Height scale", 0.6, 2, 0.05),
       range("preview.biomeCoverage", "preview.biomeCoverage - 硫気谷の被覆率", "preview.biomeCoverage - Sulfur Valley coverage", 0.1, 1, 0.05),
       text("biome.id", "minecraft:biome id - バイオームID", "minecraft:biome id - Biome id"),
@@ -1632,6 +1634,7 @@ class BiomePreview {
     this.scene.add(this.group);
     this.cube = new THREE.BoxGeometry(1, 1, 1);
     this.dummy = new THREE.Object3D();
+    this.previewSize = 72;
     this.stats = { blocks: 0, vents: 0, springs: 0, shards: 0 };
     this.addLights();
     new ResizeObserver(() => this.resize()).observe(this.container);
@@ -1654,7 +1657,7 @@ class BiomePreview {
     const width = Math.max(1, rect.width);
     const height = Math.max(1, rect.height);
     const aspect = width / height;
-    const view = 76;
+    const view = Math.max(84, this.previewSize * 1.12);
     this.camera.left = (-view * aspect) / 2;
     this.camera.right = (view * aspect) / 2;
     this.camera.top = view / 2;
@@ -1683,14 +1686,16 @@ class BiomePreview {
   generate(source) {
     this.clear();
     this.stats = { blocks: 0, vents: 0, springs: 0, shards: 0 };
-    const size = clamp(Math.round(source.preview.size), 24, 112);
+    const size = clamp(Math.round(source.preview.size), 24, 128);
+    this.previewSize = size;
+    this.resize();
     const half = size / 2;
     const outer = avg(source.basin.outer_radius_min, source.basin.outer_radius_max);
     const apron = avg(source.basin.apron_width_min, source.basin.apron_width_max);
     const ramp = avg(source.basin.ramp_width_min, source.basin.ramp_width_max);
     const floorRadius = Math.max(source.basin.floor_radius_min, outer - apron - ramp - 2);
     const effectRadius = outer + source.basin.outside_bevel_width;
-    const scale = size / Math.max(20, effectRadius * 2.1);
+    const scale = size / Math.max(20, effectRadius * PREVIEW_WORLD_PADDING);
     const heightMap = new Map();
     const blockMap = new Map();
     const matrices = new Map();
@@ -1894,13 +1899,13 @@ class CanvasPreview {
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, width, height);
 
-    const size = clamp(Math.round(source.preview.size), 24, 96);
+    const size = clamp(Math.round(source.preview.size), 24, 128);
     const outer = avg(source.basin.outer_radius_min, source.basin.outer_radius_max);
     const apron = avg(source.basin.apron_width_min, source.basin.apron_width_max);
     const ramp = avg(source.basin.ramp_width_min, source.basin.ramp_width_max);
     const floorRadius = Math.max(source.basin.floor_radius_min, outer - apron - ramp - 2);
     const effectRadius = outer + source.basin.outside_bevel_width;
-    const scale = size / Math.max(20, effectRadius * 2.1);
+    const scale = size / Math.max(20, effectRadius * PREVIEW_WORLD_PADDING);
     const seed = Number(source.preview.seed) || 1;
     const tile = Math.min(width / (size * 0.92), height / (size * 0.56)) * 0.92;
     const originX = width / 2;
