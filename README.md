@@ -6,6 +6,8 @@ Minecraft biome parameter editor and live preview tool for **Rust & Rampart**.
 [![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey)](LICENSE)
 [![Minecraft](https://img.shields.io/badge/Minecraft-1.21.11-62b47a)](https://www.minecraft.net/)
 
+![Rust & Rampart Biome Lab social preview](assets/social/social-preview.png)
+
 **Live app:** <https://musshiyaki.github.io/rust-rampart-biome-lab/>
 
 Rust & Rampart Biome Lab is a browser-based tool for tuning Minecraft mod biome parameters, world generation values, placed features, surface rules, and block assignments with an immediate bird's-eye preview. It is currently focused on the `rust_rampart:sulfur_valley` biome for Rust & Rampart `0.1.0` on Minecraft `1.21.11`.
