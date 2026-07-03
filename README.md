@@ -1,43 +1,114 @@
 # Rust & Rampart Biome Lab
 
-Static GitHub Pages app for tuning the current Rust & Rampart Sulfur Valley biome parameters.
+Minecraft biome parameter editor and live preview tool for **Rust & Rampart**.
+
+[![GitHub Pages](https://img.shields.io/badge/demo-GitHub%20Pages-2ea44f)](https://musshiyaki.github.io/rust-rampart-biome-lab/)
+[![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey)](LICENSE)
+[![Minecraft](https://img.shields.io/badge/Minecraft-1.21.11-62b47a)](https://www.minecraft.net/)
+
+**Live app:** <https://musshiyaki.github.io/rust-rampart-biome-lab/>
+
+Rust & Rampart Biome Lab is a browser-based tool for tuning Minecraft mod biome parameters, world generation values, placed features, surface rules, and block assignments with an immediate bird's-eye preview. It is currently focused on the `rust_rampart:sulfur_valley` biome for Rust & Rampart `0.1.0` on Minecraft `1.21.11`.
+
+The goal is simple: make Minecraft biome design less blind. Change the numbers, generate a preview, export JSON, and share the exact parameter state with a URL.
 
 ## Features
 
-- Minecraft-style parameter editor for `rust_rampart:sulfur_valley`
-- Live bird's-eye biome preview
-- English/Japanese UI
-- JSON copy, download, and share URL
+- Minecraft-style biome parameter editor for `rust_rampart:sulfur_valley`
+- Live bird's-eye terrain preview for basin shape, vents, sulfur patches, springs, and crystal clusters
+- English and Japanese UI
+- JSON copy, download, and share URL support
 - Creative-inventory-style block picker
-- Optional local resource-pack texture loading for vanilla block icons
+- Search by block id or display name
+- Hover tooltips for block names and ids
+- Local resource-pack texture loading for vanilla block icons
+- Rust & Rampart block textures bundled for the mod's own blocks
+- Static GitHub Pages deployment, no backend required
 
-## Local preview
+## Use Cases
+
+- Tune Fabric Minecraft mod biome parameters before hard-coding worldgen constants
+- Compare biome surface rule thresholds visually
+- Share a biome design preset with another mod developer
+- Export JSON for generated biome, configured feature, and placed feature data
+- Prototype sulfur valley terrain, sulfur vents, hot springs, and crystal shard fields
+
+## Supported Target
+
+This app is intentionally narrow for now.
+
+| Target | Value |
+| --- | --- |
+| Minecraft | `1.21.11` |
+| Mod | `Rust & Rampart 0.1.0` |
+| Biome | `rust_rampart:sulfur_valley` |
+| Loader context | Fabric-oriented worldgen data |
+
+Future versions can add generic biome presets, datapack import/export, and additional Minecraft versions.
+
+## How to Use
+
+1. Open the [live app](https://musshiyaki.github.io/rust-rampart-biome-lab/).
+2. Adjust parameters in the right-hand panel.
+3. Press **Generate**, or enable **Instant generation** for live updates.
+4. Inspect the bird's-eye preview on the left.
+5. Copy, download, or share the generated JSON.
+
+## Block Textures
+
+Official Minecraft textures are **not bundled** in this repository.
+
+To see real vanilla block textures in the block picker, load an extracted resource pack folder that contains:
+
+```text
+assets/minecraft/textures/block
+```
+
+The app reads those local PNG files in your browser and maps them to `minecraft:*` block ids. The files stay local; there is no server upload.
+
+Rust & Rampart's own block textures are included because they are part of this project.
+
+## Generated Output
+
+The JSON output includes:
+
+- `data/rust_rampart/worldgen/biome/sulfur_valley.json`
+- configured features for Rust & Rampart sulfur worldgen
+- placed features for basin, spring, vent field, vent halo, and shard field
+- implementation handoff parameters that mirror the current Java constants
+
+Some parameters represent current hard-coded Java worldgen constants. They are exported as a practical handoff object so the values can be copied back into the mod implementation.
+
+## Local Development
+
+This is a static web app. No npm install is required.
 
 ```bash
 python3 -m http.server 4173 --directory .
 ```
 
-Open <http://localhost:4173>.
+Open:
 
-## Publish to GitHub Pages
-
-Create a new GitHub repository from this folder and push to `main`.
-
-```bash
-git init
-git add .
-git commit -m "Add Rust & Rampart Biome Lab"
-git branch -M main
-git remote add origin https://github.com/YOUR_NAME/rust-rampart-biome-lab.git
-git push -u origin main
+```text
+http://localhost:4173
 ```
 
-In the GitHub repository settings, set **Pages** source to **GitHub Actions** if it is not already selected. The included workflow deploys the static app.
+Do not open `index.html` directly via `file://`; browser module imports need an HTTP server.
 
-## Texture note
+## Repository Keywords
 
-Official Minecraft textures are not bundled. Load an extracted resource pack folder from the block picker to replace vanilla block icons with real local textures.
+Minecraft biome editor, Minecraft modding tool, Fabric mod worldgen, Minecraft world generation, biome JSON generator, placed feature editor, configured feature editor, surface rules preview, Rust & Rampart, sulfur valley biome, Minecraft 1.21.11.
+
+## 日本語
+
+Rust & Rampart Biome Lab は、Minecraft MOD のバイオーム作成を支援する静的Webアプリです。現在は Rust & Rampart の `rust_rampart:sulfur_valley` に特化しています。
+
+右側でパラメーターを調整し、左側で鳥瞰プレビューを確認できます。生成したJSONはコピー、ダウンロード、共有URL化できます。ブロック選択はクリエイティブタブ風UIで、手元のリソースパックを読み込むとバニラブロックも実テクスチャ表示になります。
 
 ## License
 
-The app code and Rust & Rampart assets in this repository are released under CC0-1.0. Vendored Three.js files remain under the MIT License; see `THIRD_PARTY_NOTICES.md`.
+The app code and Rust & Rampart assets in this repository are released under [CC0-1.0](LICENSE).
+
+Vendored Three.js files remain under the MIT License. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+This project is not affiliated with Mojang or Microsoft. Minecraft is a trademark of Microsoft Corporation.
