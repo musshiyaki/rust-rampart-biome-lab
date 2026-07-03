@@ -12,7 +12,7 @@ const PREVIEW_WORLD_PADDING = 2.55;
 
 const I18N = {
   ja: {
-    appTitle: "Biome Lab",
+    appTitle: "Minecraft Biome Lab",
     languageLabel: "言語",
     previewLoading: "3Dプレビューを読み込み中...",
     previewReady: "プレビュー更新済み",
@@ -28,7 +28,7 @@ const I18N = {
     generate: "生成",
     reset: "リセット",
     presetsTitle: "デモプリセット",
-    presetDefault: "硫気谷デフォルト",
+    presetDefault: "標準プロファイル",
     presetCrystalHeavy: "結晶多め",
     presetVentFieldHeavy: "噴出孔多め",
     presetApplied: "適用済み",
@@ -52,7 +52,7 @@ const I18N = {
     naturalTab: "自然",
     oresTab: "鉱石",
     fluidsTab: "流体",
-    modTab: "Rust & Rampart",
+    modTab: "MODブロック",
     customTab: "追加",
     blocks: "ブロック",
     vents: "噴出孔",
@@ -60,7 +60,7 @@ const I18N = {
     shards: "結晶柱",
   },
   en: {
-    appTitle: "Biome Lab",
+    appTitle: "Minecraft Biome Lab",
     languageLabel: "Language",
     previewLoading: "Loading 3D preview...",
     previewReady: "Preview ready",
@@ -76,7 +76,7 @@ const I18N = {
     generate: "Generate",
     reset: "Reset",
     presetsTitle: "Demo presets",
-    presetDefault: "Sulfur Valley default",
+    presetDefault: "Default profile",
     presetCrystalHeavy: "Crystal heavy",
     presetVentFieldHeavy: "Vent field heavy",
     presetApplied: "Applied",
@@ -100,7 +100,7 @@ const I18N = {
     naturalTab: "Natural",
     oresTab: "Ores",
     fluidsTab: "Fluids",
-    modTab: "Rust & Rampart",
+    modTab: "MOD blocks",
     customTab: "Added",
     blocks: "blocks",
     vents: "vents",
@@ -531,7 +531,7 @@ const PARAM_SECTIONS = [
       range("preview.seed", "preview.seed - 乱数シード", "preview.seed - Random seed", 1, 999999, 1),
       range("preview.size", "preview.size - プレビュー範囲", "preview.size - Preview size", 32, 128, 8),
       range("preview.verticalScale", "preview.verticalScale - 高さ倍率", "preview.verticalScale - Height scale", 0.6, 2, 0.05),
-      range("preview.biomeCoverage", "preview.biomeCoverage - 硫気谷の被覆率", "preview.biomeCoverage - Sulfur Valley coverage", 0.1, 1, 0.05),
+      range("preview.biomeCoverage", "preview.biomeCoverage - 対象バイオームの被覆率", "preview.biomeCoverage - Target biome coverage", 0.1, 1, 0.05),
       text("biome.id", "minecraft:biome id - バイオームID", "minecraft:biome id - Biome id"),
     ],
   },
@@ -1559,7 +1559,7 @@ function downloadJson() {
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
   anchor.href = url;
-  anchor.download = "rust-rampart-sulfur-valley-parameters.json";
+  anchor.download = "minecraft-biome-lab-parameters.json";
   document.body.append(anchor);
   anchor.click();
   anchor.remove();
@@ -1577,7 +1577,7 @@ async function shareState() {
   const url = location.href;
   if (navigator.share) {
     try {
-      await navigator.share({ title: "Rust & Rampart Biome Lab", url });
+      await navigator.share({ title: "Minecraft Biome Lab", url });
       return;
     } catch {
       await copyText(url);

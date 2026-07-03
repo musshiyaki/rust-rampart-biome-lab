@@ -5,28 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Rust & Rampart Sulfur Valley biome parameter editor with live 3D preview and JSON export."
+      content="Open-source Minecraft biome and worldgen parameter editor with live 3D preview, JSON export, and shareable presets."
     />
-    <title>Rust & Rampart Biome Lab</title>
+    <title>Minecraft Biome Lab</title>
     <link rel="canonical" href="https://musshiyaki.github.io/rust-rampart-biome-lab/" />
     <link rel="sitemap" type="application/xml" href="https://musshiyaki.github.io/rust-rampart-biome-lab/sitemap.xml" />
     <meta name="theme-color" content="#171512" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Rust & Rampart Biome Lab" />
+    <meta property="og:title" content="Minecraft Biome Lab" />
     <meta
       property="og:description"
-      content="Minecraft biome parameter editor with live worldgen preview, JSON export, and shareable presets."
+      content="Tune biome JSON, placed features, surface rules, and block palettes with an immediate 3D worldgen preview."
     />
     <meta property="og:url" content="https://musshiyaki.github.io/rust-rampart-biome-lab/" />
     <meta property="og:image" content="https://musshiyaki.github.io/rust-rampart-biome-lab/assets/social/social-preview.png" />
     <meta property="og:image:width" content="1280" />
     <meta property="og:image:height" content="640" />
-    <meta property="og:image:alt" content="Rust & Rampart Biome Lab social preview showing a sulfur valley voxel biome." />
+    <meta property="og:image:alt" content="Minecraft Biome Lab social preview showing a voxel biome worldgen preview." />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Rust & Rampart Biome Lab" />
+    <meta name="twitter:title" content="Minecraft Biome Lab" />
     <meta
       name="twitter:description"
-      content="Minecraft biome parameter editor with live worldgen preview, JSON export, and shareable presets."
+      content="Tune biome JSON, placed features, surface rules, and block palettes with an immediate 3D worldgen preview."
     />
     <meta name="twitter:image" content="https://musshiyaki.github.io/rust-rampart-biome-lab/assets/social/social-preview.png" />
     <link rel="stylesheet" href="./styles.css" />
@@ -36,8 +36,8 @@
       <main class="preview-pane" aria-label="Biome preview">
         <div class="topbar">
           <div>
-            <p class="eyebrow">Rust &amp; Rampart</p>
-            <h1 data-i18n="appTitle">Biome Lab</h1>
+            <p class="eyebrow">Minecraft Worldgen Tool</p>
+            <h1 data-i18n="appTitle">Minecraft Biome Lab</h1>
           </div>
           <div class="topbar-actions">
             <label class="select-label" for="languageSelect" data-i18n="languageLabel">Language</label>
@@ -78,7 +78,7 @@
       <aside class="control-pane" aria-label="Biome parameters">
         <div class="control-header">
           <div>
-            <p class="eyebrow" id="targetVersion">Minecraft 1.21.11 / MOD 0.1.0</p>
+            <p class="eyebrow" id="targetVersion">Current profile: Minecraft 1.21.11 / MOD 0.1.0</p>
             <h2 data-i18n="parametersTitle">Parameters</h2>
           </div>
           <label class="toggle">
@@ -96,7 +96,7 @@
           <h3 id="presetTitle" data-i18n="presetsTitle">Demo presets</h3>
           <div id="presetButtons" class="preset-grid">
             <button class="pixel-button preset-button" type="button" data-preset-id="default" data-i18n="presetDefault">
-              Sulfur Valley default
+              Default profile
             </button>
             <button class="pixel-button preset-button" type="button" data-preset-id="crystal-heavy" data-i18n="presetCrystalHeavy">
               Crystal heavy
@@ -116,7 +116,7 @@
             <strong>Parameters load automatically below this area.</strong>
             <span>
               If this message stays visible, open the app through GitHub Pages or a local server such as
-              <code>python3 -m http.server 4173 --directory docs/biome-lab</code>, then visit
+              <code>python3 -m http.server 4173 --directory .</code>, then visit
               <code>http://localhost:4173</code>. Browser module imports do not run from direct
               <code>file://</code> opens.
             </span>
