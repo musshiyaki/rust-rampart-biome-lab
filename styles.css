@@ -439,6 +439,18 @@ input[type="range"] {
   font-size: 0.76rem;
 }
 
+.legal-notice {
+  padding: 10px;
+  color: #f8e9bf;
+  background: rgba(83, 53, 37, 0.72);
+  border: 3px solid var(--gold-dark);
+  border-right-color: var(--line-dark);
+  border-bottom-color: var(--line-dark);
+  box-shadow: 3px 3px 0 var(--shadow);
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
 .boot-notice {
   display: grid;
   gap: 8px;

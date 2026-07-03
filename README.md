@@ -1,20 +1,24 @@
-# Minecraft Biome Lab
+# Biome Lab for Minecraft Mods
 
-Open-source Minecraft biome and worldgen parameter editor with a live 3D preview.
+Open-source biome and worldgen parameter editor for Minecraft mods with a live 3D preview.
 
 [![GitHub Pages](https://img.shields.io/badge/demo-GitHub%20Pages-2ea44f)](https://musshiyaki.github.io/rust-rampart-biome-lab/)
 [![License: CC0-1.0](https://img.shields.io/badge/license-CC0--1.0-lightgrey)](LICENSE)
 [![Minecraft](https://img.shields.io/badge/Minecraft-1.21.11-62b47a)](https://www.minecraft.net/)
 
-![Minecraft Biome Lab social preview](assets/social/social-preview.png)
+![Biome Lab for Minecraft Mods social preview](assets/social/social-preview.png)
 
 **Live app:** <https://musshiyaki.github.io/rust-rampart-biome-lab/>
 
-Minecraft Biome Lab is a browser-based tool for tuning Minecraft mod biome parameters, world generation values, placed features, surface rules, and block assignments with an immediate bird's-eye preview.
+**Unofficial tool. Not approved by or associated with Mojang or Microsoft.**
+
+Biome Lab for Minecraft Mods is a browser-based tool for tuning Minecraft mod biome parameters, world generation values, placed features, surface rules, and block assignments with an immediate bird's-eye preview.
 
 It currently ships with a complete Rust & Rampart `0.1.0` target profile for `rust_rampart:sulfur_valley` on Minecraft `1.21.11`. That profile is the first working adapter, not the ceiling of the idea.
 
-The goal is simple: make Minecraft biome design less blind. Change the numbers, generate a preview, export JSON, and share the exact parameter state with a URL.
+The goal is simple: make Minecraft mod biome design less blind. Change the numbers, generate a preview, export JSON, and share the exact parameter state with a URL.
+
+The preview is an original approximation written for this project. It does not include Minecraft or Mojang source code, decompiled code, game files, official textures, official fonts, official logos, or official audio.
 
 ## Features
 
@@ -41,7 +45,7 @@ The goal is simple: make Minecraft biome design less blind. Change the numbers, 
 
 ## Current Target Profile
 
-The public app is positioned as a Minecraft biome lab. Version `0.1.0` includes one complete target profile so the editor is useful immediately instead of being a hollow generic UI.
+The public app is positioned as a biome lab for Minecraft mods. Version `0.1.0` includes one complete target profile so the editor is useful immediately instead of being a hollow generic UI.
 
 | Target | Value |
 | --- | --- |
@@ -74,6 +78,14 @@ assets/minecraft/textures/block
 The app reads those local PNG files in your browser and maps them to `minecraft:*` block ids. The files stay local; there is no server upload.
 
 The current target profile includes its own sample MOD block textures because they are part of this project.
+
+## Legal And Asset Policy
+
+- This project is an unofficial community tool.
+- It does not use official Minecraft logos, official Minecraft fonts, official Minecraft textures, official Minecraft sounds, Minecraft game code, or decompiled Mojang code.
+- The app may refer to Minecraft names and data ids where needed to describe modding targets and generated JSON.
+- The local resource-pack texture loader reads user-selected files in the browser only. Those files are not bundled, uploaded, or redistributed by this project.
+- See [Legal and Asset Policy](docs/legal-and-asset-policy.md) for the repository policy.
 
 ## Generated Output
 
@@ -108,7 +120,9 @@ Minecraft biome editor, Minecraft modding tool, Fabric mod worldgen, Minecraft w
 
 ## 日本語
 
-Minecraft Biome Lab は、Minecraft MOD のバイオーム作成を支援する静的Webアプリです。バイオームJSON、配置済みフィーチャー、サーフェスルール、ブロック割り当てを、鳥瞰3Dプレビューを見ながら調整できます。
+Biome Lab for Minecraft Mods は、Minecraft MOD のバイオーム作成を支援する静的Webアプリです。バイオームJSON、配置済みフィーチャー、サーフェスルール、ブロック割り当てを、鳥瞰3Dプレビューを見ながら調整できます。
+
+非公式ツールです。Mojang または Microsoft に承認・関連付けられたものではありません。プレビューはこのプロジェクト独自の近似実装で、Minecraft/Mojang のソースコード、逆コンパイルコード、ゲームファイル、公式テクスチャ、公式フォント、公式ロゴ、公式音声を含みません。
 
 現在の `0.1.0` では、最初の対応プロファイルとして Rust & Rampart の `rust_rampart:sulfur_valley` を同梱しています。専用デモではなく、今後プロファイル追加で広げられる実装済みの第一ターゲットです。
 
@@ -120,4 +134,4 @@ The app code and bundled sample MOD assets in this repository are released under
 
 Vendored Three.js files remain under the MIT License. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-This project is not affiliated with Mojang or Microsoft. Minecraft is a trademark of Microsoft Corporation.
+Unofficial tool. Not approved by or associated with Mojang or Microsoft. Minecraft is a trademark of Microsoft Corporation.

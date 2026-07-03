@@ -12,7 +12,7 @@ const PREVIEW_WORLD_PADDING = 2.55;
 
 const I18N = {
   ja: {
-    appTitle: "Minecraft Biome Lab",
+    appTitle: "Biome Lab for Minecraft Mods",
     languageLabel: "言語",
     previewLoading: "3Dプレビューを読み込み中...",
     previewReady: "プレビュー更新済み",
@@ -45,6 +45,7 @@ const I18N = {
     resourceTexturesLoaded: "テクスチャを読み込みました",
     resourceTexturesNone: "対応するブロックテクスチャが見つかりませんでした",
     addCustomBlock: "ブロック追加",
+    legalNotice: "非公式ツールです。Mojang または Microsoft に承認・関連付けられたものではありません。",
     invalidJson: "JSONとして読めません",
     invalidBlock: "IDとテクスチャを指定してください",
     allTab: "すべて",
@@ -60,7 +61,7 @@ const I18N = {
     shards: "結晶柱",
   },
   en: {
-    appTitle: "Minecraft Biome Lab",
+    appTitle: "Biome Lab for Minecraft Mods",
     languageLabel: "Language",
     previewLoading: "Loading 3D preview...",
     previewReady: "Preview ready",
@@ -93,6 +94,7 @@ const I18N = {
     resourceTexturesLoaded: "Loaded textures",
     resourceTexturesNone: "No matching block textures found",
     addCustomBlock: "Add block",
+    legalNotice: "Unofficial tool. Not approved by or associated with Mojang or Microsoft.",
     invalidJson: "Invalid JSON",
     invalidBlock: "Set an id and texture first",
     allTab: "All",
@@ -1559,7 +1561,7 @@ function downloadJson() {
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
   anchor.href = url;
-  anchor.download = "minecraft-biome-lab-parameters.json";
+  anchor.download = "biome-lab-for-minecraft-mods-parameters.json";
   document.body.append(anchor);
   anchor.click();
   anchor.remove();
@@ -1577,7 +1579,7 @@ async function shareState() {
   const url = location.href;
   if (navigator.share) {
     try {
-      await navigator.share({ title: "Minecraft Biome Lab", url });
+      await navigator.share({ title: "Biome Lab for Minecraft Mods", url });
       return;
     } catch {
       await copyText(url);
