@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://musshiyaki.github.io/rust-rampart-biome-lab/sitemap.xml
