@@ -25,6 +25,11 @@ const I18N = {
     instantMode: "即時生成モード",
     generate: "生成",
     reset: "リセット",
+    presetsTitle: "デモプリセット",
+    presetDefault: "硫気谷デフォルト",
+    presetCrystalHeavy: "結晶多め",
+    presetVentFieldHeavy: "噴出孔多め",
+    presetApplied: "適用済み",
     dirtyNotice: "変更は待機中です。生成を押すとプレビューへ反映されます。",
     blockPickerEyebrow: "クリエイティブインベントリ",
     blockPickerTitle: "ブロック選択",
@@ -68,6 +73,11 @@ const I18N = {
     instantMode: "Instant generation",
     generate: "Generate",
     reset: "Reset",
+    presetsTitle: "Demo presets",
+    presetDefault: "Sulfur Valley default",
+    presetCrystalHeavy: "Crystal heavy",
+    presetVentFieldHeavy: "Vent field heavy",
+    presetApplied: "Applied",
     dirtyNotice: "Changes are waiting. Press Generate to update the preview.",
     blockPickerEyebrow: "Creative Inventory",
     blockPickerTitle: "Choose Block",
@@ -424,6 +434,93 @@ const DEFAULT_STATE = {
   customBlocks: [],
 };
 
+const DEMO_PRESETS = [
+  {
+    id: "default",
+    labelKey: "presetDefault",
+    patch: {},
+  },
+  {
+    id: "crystal-heavy",
+    labelKey: "presetCrystalHeavy",
+    patch: {
+      preview: { seed: 202607, verticalScale: 1.14 },
+      placements: {
+        sulfur_shard_field: { count: 3 },
+        sulfur_vent_field: { count: 1 },
+        sulfur_vent_halo: { count_min: 3, count_max: 5 },
+      },
+      materials: {
+        floor_calcite_threshold: 0.78,
+        wall_calcite_threshold: 0.68,
+      },
+      shards: {
+        cluster_count_min: 8,
+        cluster_count_max: 12,
+        cluster_search_radius: 12,
+        satellite_search_radius: 10,
+        shard_height_min: 22,
+        shard_height_max: 56,
+        satellite_height_min: 14,
+        satellite_height_max: 32,
+        primary_base_radius_min: 2,
+        primary_base_radius_max: 3,
+        satellite_base_radius_max: 2,
+        sub_shard_count_min: 3,
+        sub_shard_count_max: 5,
+        sub_shard_distance_max: 5,
+        primary_lean_max: 18,
+        satellite_lean_max: 12,
+        main_taper_power: 1.7,
+        sub_taper_power: 1.55,
+        cluster_spacing_min: 4,
+      },
+    },
+  },
+  {
+    id: "vent-field-heavy",
+    labelKey: "presetVentFieldHeavy",
+    patch: {
+      preview: { seed: 808031, verticalScale: 1 },
+      placements: {
+        sulfur_vent_field: { count: 3 },
+        sulfur_vent_halo: { count_min: 10, count_max: 16 },
+        sulfur_shard_field: { count: 1 },
+      },
+      materials: {
+        floor_sulfur_threshold: 0.45,
+        vent_field_sulfur_threshold: 0.34,
+        scar_sulfur_threshold: 0.48,
+        apron_sulfur_threshold: 0.54,
+        floor_gravel_threshold: 0.58,
+      },
+      ventField: {
+        cluster_count_min: 10,
+        cluster_count_max: 15,
+        sulfur_radius_min: 5,
+        sulfur_radius_max: 8,
+        sulfur_blocks_min: 14,
+        sulfur_blocks_max: 24,
+        deposit_blocks_min: 8,
+        deposit_blocks_max: 14,
+        cluster_search_radius: 8,
+        slope_limit: 3,
+        vent_pool_radius: 7,
+        vent_pool_max_depth: 7,
+        max_extra_vents: 5,
+      },
+      ventHalo: {
+        cluster_radius: 5,
+        surface_y_variation: 4,
+        calcite_min: 4,
+        calcite_max: 8,
+        sulfur_min: 16,
+        sulfur_max: 28,
+      },
+    },
+  },
+];
+
 const PARAM_SECTIONS = [
   {
     id: "meta",
@@ -689,6 +786,7 @@ const els = {
   instantToggle: document.querySelector("#instantToggle"),
   generateButton: document.querySelector("#generateButton"),
   resetButton: document.querySelector("#resetButton"),
+  presetButtons: document.querySelector("#presetButtons"),
   dirtyNotice: document.querySelector("#dirtyNotice"),
   previewStatus: document.querySelector("#previewStatus"),
   previewStats: document.querySelector("#previewStats"),
@@ -755,6 +853,11 @@ function init() {
     renderBlockPicker();
     generate();
   });
+  els.presetButtons.addEventListener("click", (event) => {
+    const button = event.target instanceof Element ? event.target.closest("[data-preset-id]") : null;
+    if (!button) return;
+    applyDemoPreset(button.dataset.presetId, button);
+  });
   els.copyButton.addEventListener("click", copyJson);
   els.jsonOutput.addEventListener("click", copyJson);
   els.downloadButton.addEventListener("click", downloadJson);
@@ -772,6 +875,22 @@ function createPreview(container) {
     console.warn("WebGL preview unavailable; using canvas fallback.", error);
     container.querySelectorAll("canvas").forEach((canvas) => canvas.remove());
     return new CanvasPreview(container);
+  }
+}
+
+function applyDemoPreset(id, sourceButton) {
+  const preset = DEMO_PRESETS.find((item) => item.id === id);
+  if (!preset) return;
+
+  const customBlocks = clone(state.customBlocks || []);
+  state = mergeDeep(clone(DEFAULT_STATE), clone(preset.patch));
+  state.customBlocks = customBlocks;
+  renderParameters();
+  renderBlockPicker();
+  generate();
+
+  if (sourceButton) {
+    flashButton(sourceButton, t("presetApplied"), t(preset.labelKey));
   }
 }
 

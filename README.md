@@ -18,6 +18,7 @@ The goal is simple: make Minecraft biome design less blind. Change the numbers, 
 
 - Minecraft-style biome parameter editor for `rust_rampart:sulfur_valley`
 - Live bird's-eye terrain preview for basin shape, vents, sulfur patches, springs, and crystal clusters
+- One-click demo presets for default, crystal-heavy, and vent-heavy biome variants
 - English and Japanese UI
 - JSON copy, download, and share URL support
 - Creative-inventory-style block picker
@@ -54,7 +55,8 @@ Future versions can add generic biome presets, datapack import/export, and addit
 2. Adjust parameters in the right-hand panel.
 3. Press **Generate**, or enable **Instant generation** for live updates.
 4. Inspect the bird's-eye preview on the left.
-5. Copy, download, or share the generated JSON.
+5. Try a **Demo preset** if you want an instant starting point.
+6. Copy, download, or share the generated JSON.
 
 ## Block Textures
 
@@ -105,7 +107,7 @@ Minecraft biome editor, Minecraft modding tool, Fabric mod worldgen, Minecraft w
 
 Rust & Rampart Biome Lab は、Minecraft MOD のバイオーム作成を支援する静的Webアプリです。現在は Rust & Rampart の `rust_rampart:sulfur_valley` に特化しています。
 
-右側でパラメーターを調整し、左側で鳥瞰プレビューを確認できます。生成したJSONはコピー、ダウンロード、共有URL化できます。ブロック選択はクリエイティブタブ風UIで、手元のリソースパックを読み込むとバニラブロックも実テクスチャ表示になります。
+右側でパラメーターを調整し、左側で鳥瞰プレビューを確認できます。初見向けのデモプリセットを押すと、通常、結晶多め、噴出孔多めの状態をすぐ試せます。生成したJSONはコピー、ダウンロード、共有URL化できます。ブロック選択はクリエイティブタブ風UIで、手元のリソースパックを読み込むとバニラブロックも実テクスチャ表示になります。
 
 ## License
 
