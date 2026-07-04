@@ -58,7 +58,7 @@ const I18N = {
     blocks: "ブロック",
     vents: "噴出孔",
     springs: "温泉",
-    shards: "結晶柱",
+    shards: "結晶",
   },
   en: {
     appTitle: "Biome Lab for Minecraft Mods",
@@ -107,7 +107,7 @@ const I18N = {
     blocks: "blocks",
     vents: "vents",
     springs: "springs",
-    shards: "shards",
+    shards: "crystals",
   },
 };
 
@@ -771,8 +771,8 @@ const PARAM_SECTIONS = [
       range("placements.sulfur_spring.count", "minecraft:count - 温泉試行回数", "minecraft:count - Spring attempts", 0, 4, 1),
       checkbox("placements.sulfur_vent_field.enabled", "rust_rampart:sulfur_vent_field - 噴出孔群", "rust_rampart:sulfur_vent_field - Vent field"),
       range("placements.sulfur_vent_field.count", "minecraft:count - 噴出孔群試行回数", "minecraft:count - Vent field attempts", 0, 4, 1),
-      checkbox("placements.sulfur_shard_field.enabled", "rust_rampart:sulfur_shard_field - 結晶柱群", "rust_rampart:sulfur_shard_field - Shard field"),
-      range("placements.sulfur_shard_field.count", "minecraft:count - 結晶柱群試行回数", "minecraft:count - Shard field attempts", 0, 4, 1),
+      checkbox("placements.sulfur_shard_field.enabled", "rust_rampart:sulfur_shard_field - 結晶群", "rust_rampart:sulfur_shard_field - Crystal field"),
+      range("placements.sulfur_shard_field.count", "minecraft:count - 結晶群試行回数", "minecraft:count - Crystal field attempts", 0, 4, 1),
       checkbox("placements.sulfur_vent_halo.enabled", "rust_rampart:sulfur_vent_halo - 噴出孔ハロー", "rust_rampart:sulfur_vent_halo - Vent halo"),
       range("placements.sulfur_vent_halo.count_min", "minecraft:uniform.min_inclusive - ハロー最小試行", "minecraft:uniform.min_inclusive - Halo min attempts", 0, 16, 1),
       range("placements.sulfur_vent_halo.count_max", "minecraft:uniform.max_inclusive - ハロー最大試行", "minecraft:uniform.max_inclusive - Halo max attempts", 0, 24, 1),
@@ -929,24 +929,24 @@ const PARAM_SECTIONS = [
   },
   {
     id: "shards",
-    title: { ja: "SulfurShardFieldFeature / 結晶柱", en: "SulfurShardFieldFeature / Shards" },
+    title: { ja: "CrystalFieldFeature / 結晶群", en: "CrystalFieldFeature / Crystals" },
     controls: [
-      range("shards.cluster_count_min", "MIN_CLUSTER_COUNT - 結晶クラスタ最小", "MIN_CLUSTER_COUNT - Min shard clusters", 0, 16, 1),
-      range("shards.cluster_count_max", "MAX_CLUSTER_COUNT - 結晶クラスタ最大", "MAX_CLUSTER_COUNT - Max shard clusters", 0, 24, 1),
-      range("shards.cluster_search_radius", "CLUSTER_SEARCH_RADIUS - 主結晶探索半径", "CLUSTER_SEARCH_RADIUS - Main shard search radius", 0, 24, 1),
+      range("shards.cluster_count_min", "MIN_CLUSTER_COUNT - 結晶クラスタ最小", "MIN_CLUSTER_COUNT - Min crystal clusters", 0, 16, 1),
+      range("shards.cluster_count_max", "MAX_CLUSTER_COUNT - 結晶クラスタ最大", "MAX_CLUSTER_COUNT - Max crystal clusters", 0, 24, 1),
+      range("shards.cluster_search_radius", "CLUSTER_SEARCH_RADIUS - 主結晶探索半径", "CLUSTER_SEARCH_RADIUS - Main crystal search radius", 0, 24, 1),
       range("shards.satellite_search_radius", "SATELLITE_SEARCH_RADIUS - 副結晶探索半径", "SATELLITE_SEARCH_RADIUS - Satellite search radius", 0, 24, 1),
-      range("shards.shard_height_min", "MIN_SHARD_HEIGHT - 主結晶高さ最小", "MIN_SHARD_HEIGHT - Min main shard height", 1, 64, 1),
-      range("shards.shard_height_max", "MAX_SHARD_HEIGHT - 主結晶高さ最大", "MAX_SHARD_HEIGHT - Max main shard height", 1, 96, 1),
+      range("shards.shard_height_min", "MIN_SHARD_HEIGHT - 主結晶高さ最小", "MIN_SHARD_HEIGHT - Min main crystal height", 1, 64, 1),
+      range("shards.shard_height_max", "MAX_SHARD_HEIGHT - 主結晶高さ最大", "MAX_SHARD_HEIGHT - Max main crystal height", 1, 96, 1),
       range("shards.satellite_height_min", "MIN_SATELLITE_HEIGHT - 副結晶高さ最小", "MIN_SATELLITE_HEIGHT - Min satellite height", 1, 48, 1),
       range("shards.satellite_height_max", "MAX_SATELLITE_HEIGHT - 副結晶高さ最大", "MAX_SATELLITE_HEIGHT - Max satellite height", 1, 64, 1),
       range("shards.primary_base_radius_min", "MIN_PRIMARY_BASE_RADIUS - 主根元半径最小", "MIN_PRIMARY_BASE_RADIUS - Min primary base radius", 1, 8, 1),
       range("shards.primary_base_radius_max", "MAX_PRIMARY_BASE_RADIUS - 主根元半径最大", "MAX_PRIMARY_BASE_RADIUS - Max primary base radius", 1, 10, 1),
       range("shards.satellite_base_radius_min", "MIN_SATELLITE_BASE_RADIUS - 副根元半径最小", "MIN_SATELLITE_BASE_RADIUS - Min satellite base radius", 1, 8, 1),
       range("shards.satellite_base_radius_max", "MAX_SATELLITE_BASE_RADIUS - 副根元半径最大", "MAX_SATELLITE_BASE_RADIUS - Max satellite base radius", 1, 10, 1),
-      range("shards.sub_shard_count_min", "MIN_SUB_SHARD_COUNT - 副結晶数最小", "MIN_SUB_SHARD_COUNT - Min sub-shards", 0, 8, 1),
-      range("shards.sub_shard_count_max", "MAX_SUB_SHARD_COUNT - 副結晶数最大", "MAX_SUB_SHARD_COUNT - Max sub-shards", 0, 12, 1),
-      range("shards.sub_shard_distance_min", "MIN_SUB_SHARD_DISTANCE - 副結晶距離最小", "MIN_SUB_SHARD_DISTANCE - Min sub-shard distance", 1, 12, 1),
-      range("shards.sub_shard_distance_max", "MAX_SUB_SHARD_DISTANCE - 副結晶距離最大", "MAX_SUB_SHARD_DISTANCE - Max sub-shard distance", 1, 16, 1),
+      range("shards.sub_shard_count_min", "MIN_SUB_SHARD_COUNT - 副結晶数最小", "MIN_SUB_SHARD_COUNT - Min sub-crystals", 0, 8, 1),
+      range("shards.sub_shard_count_max", "MAX_SUB_SHARD_COUNT - 副結晶数最大", "MAX_SUB_SHARD_COUNT - Max sub-crystals", 0, 12, 1),
+      range("shards.sub_shard_distance_min", "MIN_SUB_SHARD_DISTANCE - 副結晶距離最小", "MIN_SUB_SHARD_DISTANCE - Min sub-crystal distance", 1, 12, 1),
+      range("shards.sub_shard_distance_max", "MAX_SUB_SHARD_DISTANCE - 副結晶距離最大", "MAX_SUB_SHARD_DISTANCE - Max sub-crystal distance", 1, 16, 1),
       range("shards.primary_lean_max", "MAX_PRIMARY_LEAN - 主結晶傾き最大", "MAX_PRIMARY_LEAN - Max primary lean", 0, 32, 1),
       range("shards.satellite_lean_max", "MAX_SATELLITE_LEAN - 副結晶傾き最大", "MAX_SATELLITE_LEAN - Max satellite lean", 0, 24, 1),
       range("shards.main_taper_power", "MAIN_TAPER_POWER - 主結晶テーパー", "MAIN_TAPER_POWER - Main taper power", 0.5, 4, 0.05),
@@ -2150,16 +2150,27 @@ class BiomePreview {
   }
 
   addShard(source, x, y, z, radius, height) {
-    const geometry = new THREE.ConeGeometry(radius, height, 4);
     const material = new THREE.MeshStandardMaterial({
       color: colorForBlock(source.blocks.crystal),
-      roughness: 0.58,
+      roughness: 0.62,
       emissive: new THREE.Color(colorForBlock(source.blocks.crystal)).multiplyScalar(0.12),
     });
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(x, y + height / 2, z);
-    mesh.rotation.y = Math.PI / 4;
-    this.group.add(mesh);
+    const layers = clamp(Math.round(height), 3, 14);
+    const maxHalfWidth = clamp(Math.round(radius * 0.75), 1, 3);
+    for (let layer = 0; layer < layers; layer++) {
+      const taper = layer / Math.max(1, layers - 1);
+      const halfWidth = Math.max(0, Math.round(maxHalfWidth * (1 - taper)));
+      const yPos = y + 0.42 + layer * 0.74;
+      for (let dx = -halfWidth; dx <= halfWidth; dx++) {
+        for (let dz = -halfWidth; dz <= halfWidth; dz++) {
+          if (Math.abs(dx) + Math.abs(dz) > halfWidth) continue;
+          const mesh = new THREE.Mesh(this.cube, material);
+          mesh.position.set(x + dx * 0.58, yPos, z + dz * 0.58);
+          mesh.scale.set(0.58, 0.74, 0.58);
+          this.group.add(mesh);
+        }
+      }
+    }
   }
 
   worldToGrid(wx, wz, half, scale, size) {
@@ -2277,12 +2288,12 @@ class CanvasPreview {
       const point = projectWorld(Math.cos(angle) * radius, Math.sin(angle) * radius, half, scale, size, tile, originX, originY, heightMap, source);
       if (!point) continue;
       ctx.fillStyle = colorForBlock(source.blocks.crystal);
-      ctx.beginPath();
-      ctx.moveTo(point.x, point.y - tile * 2.4);
-      ctx.lineTo(point.x + tile * 0.45, point.y - tile * 0.2);
-      ctx.lineTo(point.x - tile * 0.45, point.y - tile * 0.2);
-      ctx.closePath();
-      ctx.fill();
+      for (let layer = 0; layer < 5; layer++) {
+        const width = tile * (0.82 - layer * 0.12);
+        const x = point.x - width / 2;
+        const y = point.y - tile * (0.42 + layer * 0.42);
+        ctx.fillRect(x, y, width, tile * 0.34);
+      }
     }
 
     els.previewStats.textContent = `${blockCount} ${t("blocks")} / ${ventCount} ${t("vents")} / ${springCount} ${t("springs")} / ${shardCount} ${t("shards")}`;
