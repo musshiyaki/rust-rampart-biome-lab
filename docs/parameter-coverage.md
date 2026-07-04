@@ -15,12 +15,13 @@ The coverage model is:
 | Biome identity and version metadata | Yes | Yes | Partial | Current profile targets Rust & Rampart `0.1.0` and Minecraft `1.21.11`. |
 | Biome climate values | Yes | Yes | No | `has_precipitation`, `temperature`, `downfall`, and temperature modifier are editable. |
 | Biome visual/audio values | Yes | Yes | Partial | Colors affect JSON and some preview colors. Audio values are export-only. |
-| Mob spawners and spawn costs | JSON | Yes | No | Exposed as raw JSON because structures are open-ended. |
+| Mob spawners and spawn costs | JSON | Yes | No | Exposed as raw JSON because spawn entry maps are open-ended. |
 | Vanilla generation toggles | Partial | Yes | No | Current UI groups vanilla ores as one toggle instead of every ore entry. |
 | Placed features | Yes | Yes | Partial | Counts, heightmap, biome filter, and vent halo predicate blocks are editable. |
 | Configured features | Partial | Yes | Partial | Current Rust & Rampart features use `NoneFeatureConfiguration`; custom feature configs should use extension JSON. |
+| Structures | Yes | Yes | Partial | Exports structure, structure set, biome tag, and empty template-pool handoff files; preview uses approximate ruin/tower/arch/monolith/platform silhouettes. |
 | Surface rules | Partial | Yes | Partial | Core thresholds are editable; full rule tree editing is not yet schema-driven. |
-| Block assignments | Yes | Yes | Yes | Includes vanilla/resource-pack local texture loading and sample MOD block textures. |
+| Block assignments | Yes | Yes | Yes | Includes vanilla/resource-pack local texture loading and generated example MOD block swatches. |
 | Basin locator constants | Yes | Yes | Yes | Main shape and floor constants are editable. |
 | Material thresholds | Yes | Yes | Yes | Sulfur/calcite/gravel thresholds are editable. |
 | Vent field constants | Yes | Yes | Yes | Main cluster, radius, deposit, slope, and pool constants are editable. |

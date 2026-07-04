@@ -23,16 +23,17 @@ The preview is an original approximation written for this project. It does not i
 ## Features
 
 - Minecraft-style biome and worldgen parameter editor
-- Live bird's-eye terrain preview for basin shape, vents, material patches, springs, and crystal clusters
+- Live bird's-eye terrain preview for basin shape, vents, material patches, springs, crystals, and structure silhouettes
 - One-click demo presets for default, crystal-heavy, and vent-heavy biome variants
 - English and Japanese UI
 - JSON copy, download, and share URL support
 - Creative-inventory-style block picker
 - Search by block id or display name
 - Hover tooltips for block names and ids
+- Structure section with ruin, tower, arch, monolith, and platform preview shapes
 - Mode-specific full-coverage fields for Minecraft data packs, Forge, NeoForge, and Fabric handoff JSON
 - Local resource-pack texture loading for vanilla block icons
-- Bundled sample MOD block textures for the current target profile
+- Built-in example MOD blocks rendered as generated color swatches
 - Static GitHub Pages deployment, no backend required
 
 ## Use Cases
@@ -91,7 +92,7 @@ assets/minecraft/textures/block
 
 The app reads those local PNG files in your browser and maps them to `minecraft:*` block ids. The files stay local; there is no server upload.
 
-The current target profile includes its own sample MOD block textures because they are part of this project.
+Built-in example MOD blocks use generated color swatches. Custom MOD textures can be loaded locally through the block picker.
 
 ## Legal And Asset Policy
 
@@ -108,6 +109,7 @@ The JSON output includes Minecraft data files plus a handoff object for implemen
 - `data/rust_rampart/worldgen/biome/sulfur_valley.json`
 - configured features for the sample biome worldgen profile
 - placed features for basin, spring, vent field, vent halo, and shard field
+- optional structure, structure set, biome tag, and template pool handoff files
 - implementation handoff parameters that mirror the current Java constants
 - extra user-provided data pack files and loader-specific extension JSON when supplied
 

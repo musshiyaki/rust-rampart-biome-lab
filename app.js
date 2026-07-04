@@ -59,6 +59,7 @@ const I18N = {
     vents: "噴出孔",
     springs: "温泉",
     shards: "結晶",
+    structures: "構造物",
   },
   en: {
     appTitle: "Biome Lab for Minecraft Mods",
@@ -108,6 +109,7 @@ const I18N = {
     vents: "vents",
     springs: "springs",
     shards: "crystals",
+    structures: "structures",
   },
 };
 
@@ -178,6 +180,10 @@ const BLOCKS = [
   ["minecraft:basalt", "Basalt", "玄武岩", "building", "#535158"],
   ["minecraft:blackstone", "Blackstone", "ブラックストーン", "building", "#2d2a31"],
   ["minecraft:obsidian", "Obsidian", "黒曜石", "building", "#171225"],
+  ["minecraft:stone_bricks", "Stone Bricks", "石レンガ", "building", "#77756d"],
+  ["minecraft:mossy_stone_bricks", "Mossy Stone Bricks", "苔むした石レンガ", "building", "#69735f"],
+  ["minecraft:cracked_stone_bricks", "Cracked Stone Bricks", "ひび割れた石レンガ", "building", "#686862"],
+  ["minecraft:chiseled_stone_bricks", "Chiseled Stone Bricks", "模様入りの石レンガ", "building", "#747269"],
   ["minecraft:coal_ore", "Coal Ore", "石炭鉱石", "ores", "#595958"],
   ["minecraft:iron_ore", "Iron Ore", "鉄鉱石", "ores", "#8f7d68"],
   ["minecraft:copper_ore", "Copper Ore", "銅鉱石", "ores", "#8e7a64"],
@@ -307,6 +313,27 @@ const DEFAULT_STATE = {
     vent: "examplemod:thermal_vent",
     deposit: "examplemod:mineral_deposit",
     crystal: "examplemod:glow_crystal",
+    structure: "minecraft:stone_bricks",
+  },
+  structures: {
+    enabled: true,
+    name: "sample_ruin",
+    shape: "ruin",
+    count: 2,
+    block: "minecraft:stone_bricks",
+    secondary_block: "minecraft:mossy_stone_bricks",
+    width: 7,
+    depth: 6,
+    height: 5,
+    y_offset: 0,
+    spacing: 28,
+    separation: 8,
+    salt: 918273,
+    step: "surface_structures",
+    terrain_adaptation: "beard_thin",
+    biome_tag: "rust_rampart:has_structure/sample_ruin",
+    raw_structure: {},
+    raw_structure_set: {},
   },
   surface: {
     sulfur_shelf_y: 72,
@@ -785,6 +812,54 @@ const PARAM_SECTIONS = [
     ],
   },
   {
+    id: "structures",
+    title: { ja: "Structures / 構造物", en: "Structures" },
+    controls: [
+      checkbox("structures.enabled", "minecraft:structure - 構造物を有効化", "minecraft:structure - Enable structure preview"),
+      text("structures.name", "minecraft:structure id - 構造物名", "minecraft:structure id - Structure name"),
+      select("structures.shape", "preview shape - 概形", "preview shape - Approximate shape", [
+        ["ruin", { ja: "ruin - 遺跡", en: "ruin - Ruin" }],
+        ["tower", { ja: "tower - 塔", en: "tower - Tower" }],
+        ["arch", { ja: "arch - アーチ", en: "arch - Arch" }],
+        ["monolith", { ja: "monolith - 石柱", en: "monolith - Monolith" }],
+        ["platform", { ja: "platform - 基壇", en: "platform - Platform" }],
+      ]),
+      range("structures.count", "preview count - プレビュー個数", "preview count - Preview count", 0, 8, 1),
+      range("structures.width", "preview width - 幅", "preview width - Width", 3, 18, 1),
+      range("structures.depth", "preview depth - 奥行き", "preview depth - Depth", 3, 18, 1),
+      range("structures.height", "preview height - 高さ", "preview height - Height", 1, 18, 1),
+      range("structures.y_offset", "start height offset - Y補正", "start height offset - Y offset", -12, 24, 1),
+      block("structures.block", "Blocks.STONE_BRICKS - 主構造ブロック", "Blocks.STONE_BRICKS - Primary structure block"),
+      block("structures.secondary_block", "Blocks.MOSSY_STONE_BRICKS - 副構造ブロック", "Blocks.MOSSY_STONE_BRICKS - Secondary structure block"),
+      text("structures.biome_tag", "tags/worldgen/biome - 構造物用バイオームタグ", "tags/worldgen/biome - Structure biome tag"),
+      select("structures.step", "minecraft:generation_step - 構造物生成ステップ", "minecraft:generation_step - Structure generation step", [
+        ["raw_generation", "raw_generation"],
+        ["lakes", "lakes"],
+        ["local_modifications", "local_modifications"],
+        ["underground_structures", "underground_structures"],
+        ["surface_structures", "surface_structures"],
+        ["strongholds", "strongholds"],
+        ["underground_ores", "underground_ores"],
+        ["underground_decoration", "underground_decoration"],
+        ["fluid_springs", "fluid_springs"],
+        ["vegetal_decoration", "vegetal_decoration"],
+        ["top_layer_modification", "top_layer_modification"],
+      ]),
+      select("structures.terrain_adaptation", "minecraft:terrain_adaptation - 地形適応", "minecraft:terrain_adaptation - Terrain adaptation", [
+        ["none", "none"],
+        ["bury", "bury"],
+        ["beard_thin", "beard_thin"],
+        ["beard_box", "beard_box"],
+        ["encapsulate", "encapsulate"],
+      ]),
+      range("structures.spacing", "random_spread.spacing - 配置間隔", "random_spread.spacing - Spacing", 1, 128, 1),
+      range("structures.separation", "random_spread.separation - 最小間隔", "random_spread.separation - Separation", 0, 64, 1),
+      range("structures.salt", "random_spread.salt - 配置salt", "random_spread.salt - Placement salt", 0, 1000000, 1),
+      json("structures.raw_structure", "structure raw - 構造物JSON上書き", "structure raw - Structure JSON overrides"),
+      json("structures.raw_structure_set", "structure_set raw - 構造物セットJSON上書き", "structure_set raw - Structure set JSON overrides"),
+    ],
+  },
+  {
     id: "blocks",
     title: { ja: "ブロック割り当て", en: "Block Assignments" },
     controls: [
@@ -796,6 +871,7 @@ const PARAM_SECTIONS = [
       block("blocks.vent", "ModBlocks.THERMAL_VENT - 噴出孔", "ModBlocks.THERMAL_VENT - Vent block"),
       block("blocks.deposit", "ModBlocks.MINERAL_DEPOSIT - 鉱物堆積物", "ModBlocks.MINERAL_DEPOSIT - Mineral deposit"),
       block("blocks.crystal", "ModBlocks.GLOW_CRYSTAL - 結晶柱", "ModBlocks.GLOW_CRYSTAL - Crystal block"),
+      block("blocks.structure", "Blocks.STONE_BRICKS - 構造物", "Blocks.STONE_BRICKS - Structure block"),
     ],
   },
   {
@@ -1565,6 +1641,7 @@ function buildExport(source) {
       files[`data/${TARGET.modId}/worldgen/placed_feature/${id}.json`] = buildPlacedFeatureJson(id, normalized.placements[id]);
     }
   }
+  appendStructureFiles(files, normalized);
 
   const loaderMode = normalized.extensions?.loader_mode || "minecraft";
   appendExtraFiles(files, normalized.extensions?.datapack_files);
@@ -1609,6 +1686,7 @@ function buildExport(source) {
       vent_halo: normalized.ventHalo,
       springs: normalized.springs,
       shards: normalized.shards,
+      structures: normalized.structures,
       custom_blocks: normalized.customBlocks.map(({ id, name, color }) => ({ id, name, color })),
     },
   };
@@ -1663,6 +1741,52 @@ function appendLoaderBiomeModifier(files, loader, schema) {
   files[`data/${TARGET.modId}/${loader}/biome_modifier/${name}.json`] = modifier;
 }
 
+function appendStructureFiles(files, source) {
+  const settings = source.structures;
+  if (!settings?.enabled) return;
+  const name = cleanExportName(settings.name || "sample_structure");
+  if (!name) return;
+  const structureId = `${TARGET.modId}:${name}`;
+  const biomeTag = cleanTagId(settings.biome_tag || `${TARGET.modId}:has_structure/${name}`);
+  const poolId = `${TARGET.modId}:${name}/start_pool`;
+  const structure = {
+    type: "minecraft:jigsaw",
+    biomes: `#${biomeTag}`,
+    step: settings.step || "surface_structures",
+    terrain_adaptation: settings.terrain_adaptation || "beard_thin",
+    spawn_overrides: {},
+    start_pool: poolId,
+    size: 1,
+    start_height: { absolute: Number(settings.y_offset) || 0 },
+    project_start_to_heightmap: "WORLD_SURFACE_WG",
+    max_distance_from_center: 80,
+    use_expansion_hack: false,
+    ...(isPlainObject(settings.raw_structure) ? settings.raw_structure : {}),
+  };
+  const structureSet = {
+    structures: [{ structure: structureId, weight: 1 }],
+    placement: {
+      type: "minecraft:random_spread",
+      spacing: Math.max(1, Math.round(Number(settings.spacing) || 1)),
+      separation: Math.max(0, Math.round(Number(settings.separation) || 0)),
+      salt: Math.max(0, Math.round(Number(settings.salt) || 0)),
+    },
+    ...(isPlainObject(settings.raw_structure_set) ? settings.raw_structure_set : {}),
+  };
+
+  files[`data/${TARGET.modId}/worldgen/structure/${name}.json`] = structure;
+  files[`data/${TARGET.modId}/worldgen/structure_set/${name}.json`] = structureSet;
+  files[`data/${TARGET.modId}/worldgen/template_pool/${name}/start_pool.json`] = {
+    name: poolId,
+    fallback: "minecraft:empty",
+    elements: [],
+  };
+  files[biomeTagPath(biomeTag)] = {
+    replace: false,
+    values: [source.biome.id],
+  };
+}
+
 function appendExtraFiles(files, entries) {
   if (!entries || typeof entries !== "object" || Array.isArray(entries)) return;
   for (const [path, content] of Object.entries(entries)) {
@@ -1696,6 +1820,17 @@ function buildRegistryPath(registryType, name) {
   const cleanName = cleanExportName(name);
   if (!cleanRegistry || !cleanName) return "";
   return `data/${TARGET.modId}/${cleanRegistry}/${cleanName}.json`;
+}
+
+function cleanTagId(tagId) {
+  return String(tagId || "").replace(/^#/, "").replace(/^\/+/, "").replace(/\.json$/i, "").replace(/[^a-z0-9_:./-]/gi, "_");
+}
+
+function biomeTagPath(tagId) {
+  const cleanTag = cleanTagId(tagId);
+  const [namespace, ...rest] = cleanTag.includes(":") ? cleanTag.split(":") : [TARGET.modId, cleanTag];
+  const path = cleanExportName(rest.join(":") || "has_structure/sample_structure");
+  return `data/${namespace}/tags/worldgen/biome/${path}.json`;
 }
 
 function isPlainObject(value) {
@@ -1844,6 +1979,11 @@ function normalizeRanges(target) {
       setByPath(target, maxPath, min);
     }
   }
+  const spacing = Number(target.structures?.spacing);
+  const separation = Number(target.structures?.separation);
+  if (Number.isFinite(spacing) && Number.isFinite(separation) && spacing > 0 && separation >= spacing) {
+    target.structures.separation = Math.max(0, spacing - 1);
+  }
 }
 
 function copyJson() {
@@ -1946,7 +2086,7 @@ class BiomePreview {
     this.cube = new THREE.BoxGeometry(1, 1, 1);
     this.dummy = new THREE.Object3D();
     this.previewSize = 72;
-    this.stats = { blocks: 0, vents: 0, springs: 0, shards: 0 };
+    this.stats = { blocks: 0, vents: 0, springs: 0, shards: 0, structures: 0 };
     this.addLights();
     new ResizeObserver(() => this.resize()).observe(this.container);
     this.resize();
@@ -1996,7 +2136,7 @@ class BiomePreview {
 
   generate(source) {
     this.clear();
-    this.stats = { blocks: 0, vents: 0, springs: 0, shards: 0 };
+    this.stats = { blocks: 0, vents: 0, springs: 0, shards: 0, structures: 0 };
     const size = clamp(Math.round(source.preview.size), 24, 128);
     this.previewSize = size;
     this.resize();
@@ -2043,7 +2183,7 @@ class BiomePreview {
     }
 
     this.addFeatures(source, size, half, scale, heightMap, blockMap, { outer, floorRadius, ramp, effectRadius, seed });
-    els.previewStats.textContent = `${this.stats.blocks} ${t("blocks")} / ${this.stats.vents} ${t("vents")} / ${this.stats.springs} ${t("springs")} / ${this.stats.shards} ${t("shards")}`;
+    els.previewStats.textContent = `${this.stats.blocks} ${t("blocks")} / ${this.stats.vents} ${t("vents")} / ${this.stats.springs} ${t("springs")} / ${this.stats.shards} ${t("shards")} / ${this.stats.structures} ${t("structures")}`;
   }
 
   addFeatures(source, size, half, scale, heightMap, blockMap, shape) {
@@ -2126,6 +2266,7 @@ class BiomePreview {
         this.stats.shards++;
       }
     }
+    this.addStructures(source, size, half, scale, heightMap, shape);
   }
 
   addBlockFeature(blockId, x, y, z, width, height) {
@@ -2170,6 +2311,100 @@ class BiomePreview {
           this.group.add(mesh);
         }
       }
+    }
+  }
+
+  addStructures(source, size, half, scale, heightMap, terrainShape) {
+    if (!source.structures?.enabled || source.structures.count <= 0) return;
+    const rng = mulberry32((terrainShape.seed ^ 0x73a8d42f) >>> 0);
+    const count = Math.round(source.structures.count);
+    for (let i = 0; i < count; i++) {
+      const angle = rng() * Math.PI * 2;
+      const radius = terrainShape.floorRadius * (0.2 + rng() * 0.68);
+      const position = this.worldToGrid(Math.cos(angle) * radius, Math.sin(angle) * radius, half, scale, size);
+      if (!position) continue;
+      const y = this.heightAt(heightMap, position) + Number(source.structures.y_offset || 0);
+      this.addStructureShape(source, position.x - half, y, position.z - half, rng);
+      this.stats.structures++;
+    }
+  }
+
+  addStructureShape(source, x, y, z, rng) {
+    const width = clamp(Math.round(source.structures.width), 3, 18);
+    const depth = clamp(Math.round(source.structures.depth), 3, 18);
+    const height = clamp(Math.round(source.structures.height), 1, 18);
+    const shape = source.structures.shape || "ruin";
+    const primary = source.structures.block || source.blocks.structure || "minecraft:stone_bricks";
+    const secondary = source.structures.secondary_block || primary;
+    const add = (dx, dy, dz, blockId = rng() > 0.72 ? secondary : primary) => {
+      this.addBlockFeature(blockId, x + dx, y + dy + 0.52, z + dz, 0.96, 0.96);
+    };
+
+    if (shape === "platform") {
+      for (let layer = 0; layer < Math.min(3, height); layer++) {
+        const inset = layer;
+        for (let dx = -Math.floor(width / 2) + inset; dx <= Math.floor(width / 2) - inset; dx++) {
+          for (let dz = -Math.floor(depth / 2) + inset; dz <= Math.floor(depth / 2) - inset; dz++) {
+            add(dx, layer, dz);
+          }
+        }
+      }
+      return;
+    }
+
+    if (shape === "monolith") {
+      for (let dy = 0; dy < height; dy++) {
+        const halfWidth = dy > height * 0.66 ? 0 : dy > height * 0.35 ? 1 : Math.max(1, Math.floor(width / 4));
+        for (let dx = -halfWidth; dx <= halfWidth; dx++) {
+          for (let dz = -halfWidth; dz <= halfWidth; dz++) {
+            if (Math.abs(dx) + Math.abs(dz) <= halfWidth + 1) add(dx, dy, dz);
+          }
+        }
+      }
+      return;
+    }
+
+    if (shape === "arch") {
+      const span = Math.max(2, Math.floor(width / 2));
+      for (let dy = 0; dy < height; dy++) {
+        add(-span, dy, 0);
+        add(span, dy, 0);
+      }
+      for (let dx = -span; dx <= span; dx++) add(dx, height, 0);
+      for (let dx = -span + 1; dx < span; dx++) if (rng() > 0.34) add(dx, height - 1, 0, secondary);
+      return;
+    }
+
+    if (shape === "tower") {
+      const radius = Math.max(2, Math.floor(Math.min(width, depth) / 2));
+      for (let dy = 0; dy < height; dy++) {
+        for (let dx = -radius; dx <= radius; dx++) {
+          for (let dz = -radius; dz <= radius; dz++) {
+            const dist = Math.sqrt(dx * dx + dz * dz);
+            const isWall = dist >= radius - 0.8 && dist <= radius + 0.25;
+            const isFloor = dy === 0 && dist <= radius;
+            const isCrenel = dy === height - 1 && isWall && (Math.abs(dx + dz) % 2 === 0);
+            if (isWall || isFloor || isCrenel) add(dx, dy, dz);
+          }
+        }
+      }
+      return;
+    }
+
+    const halfW = Math.floor(width / 2);
+    const halfD = Math.floor(depth / 2);
+    for (let dx = -halfW; dx <= halfW; dx++) {
+      for (let dz = -halfD; dz <= halfD; dz++) {
+        const edge = Math.abs(dx) === halfW || Math.abs(dz) === halfD;
+        if (!edge && rng() > 0.18) continue;
+        add(dx, 0, dz);
+        if (edge && rng() > 0.46) add(dx, 1, dz);
+        if (edge && rng() > 0.76 && height > 2) add(dx, 2, dz, secondary);
+      }
+    }
+    for (const [dx, dz] of [[-halfW, -halfD], [halfW, -halfD], [-halfW, halfD], [halfW, halfD]]) {
+      const pillarHeight = Math.max(2, Math.min(height, 2 + Math.floor(rng() * height)));
+      for (let dy = 0; dy < pillarHeight; dy++) add(dx, dy, dz);
     }
   }
 
@@ -2296,7 +2531,17 @@ class CanvasPreview {
       }
     }
 
-    els.previewStats.textContent = `${blockCount} ${t("blocks")} / ${ventCount} ${t("vents")} / ${springCount} ${t("springs")} / ${shardCount} ${t("shards")}`;
+    const structureCount = source.structures?.enabled ? Math.round(source.structures.count) : 0;
+    const structureRng = mulberry32(seed ^ 0x73a8d42f);
+    for (let i = 0; i < structureCount; i++) {
+      const angle = structureRng() * Math.PI * 2;
+      const radius = floorRadius * (0.2 + structureRng() * 0.68);
+      const point = projectWorld(Math.cos(angle) * radius, Math.sin(angle) * radius, half, scale, size, tile, originX, originY, heightMap, source);
+      if (!point) continue;
+      drawStructureGlyph(ctx, point.x, point.y, tile, source);
+    }
+
+    els.previewStats.textContent = `${blockCount} ${t("blocks")} / ${ventCount} ${t("vents")} / ${springCount} ${t("springs")} / ${shardCount} ${t("shards")} / ${structureCount} ${t("structures")}`;
   }
 }
 
@@ -2631,6 +2876,44 @@ function drawDiamond(ctx, x, y, tile, colorValue) {
   ctx.strokeStyle = "rgba(0, 0, 0, 0.18)";
   ctx.lineWidth = 1;
   ctx.stroke();
+}
+
+function drawStructureGlyph(ctx, x, y, tile, source) {
+  const primary = colorForBlock(source.structures.block || source.blocks.structure);
+  const secondary = colorForBlock(source.structures.secondary_block || source.structures.block || source.blocks.structure);
+  const shape = source.structures.shape || "ruin";
+  ctx.fillStyle = primary;
+  const unit = tile * 0.34;
+  if (shape === "monolith") {
+    ctx.fillRect(x - unit * 0.5, y - unit * 3.4, unit, unit * 3.2);
+    ctx.fillStyle = secondary;
+    ctx.fillRect(x - unit * 0.28, y - unit * 4.05, unit * 0.56, unit * 0.72);
+    return;
+  }
+  if (shape === "tower") {
+    ctx.fillRect(x - unit, y - unit * 2.8, unit * 2, unit * 2.5);
+    ctx.fillStyle = secondary;
+    for (let i = -1; i <= 1; i++) ctx.fillRect(x + i * unit * 0.7 - unit * 0.22, y - unit * 3.3, unit * 0.44, unit * 0.5);
+    return;
+  }
+  if (shape === "arch") {
+    ctx.fillRect(x - unit * 1.4, y - unit * 2.6, unit * 0.55, unit * 2.3);
+    ctx.fillRect(x + unit * 0.85, y - unit * 2.6, unit * 0.55, unit * 2.3);
+    ctx.fillStyle = secondary;
+    ctx.fillRect(x - unit * 1.4, y - unit * 3, unit * 2.8, unit * 0.52);
+    return;
+  }
+  if (shape === "platform") {
+    ctx.fillRect(x - unit * 2.1, y - unit * 0.8, unit * 4.2, unit * 0.6);
+    ctx.fillStyle = secondary;
+    ctx.fillRect(x - unit * 1.3, y - unit * 1.35, unit * 2.6, unit * 0.55);
+    return;
+  }
+  ctx.fillRect(x - unit * 1.7, y - unit * 1.2, unit * 3.4, unit * 0.5);
+  ctx.fillRect(x - unit * 1.7, y - unit * 2.2, unit * 0.5, unit);
+  ctx.fillRect(x + unit * 1.2, y - unit * 2.2, unit * 0.5, unit);
+  ctx.fillStyle = secondary;
+  ctx.fillRect(x - unit * 0.45, y - unit * 1.75, unit * 0.9, unit * 0.5);
 }
 
 function projectWorld(wx, wz, half, scale, size, tile, originX, originY, heightMap, source) {
