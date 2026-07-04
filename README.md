@@ -59,14 +59,14 @@ Future versions can add named target profiles, datapack import/export, custom sc
 
 ## Parameter Coverage
 
-The fixed controls cover the current Rust & Rampart target profile's main biome/worldgen values. The **Full Coverage / Extra JSON** section is open by default and starts with a target mode selector:
+The fixed controls cover the current Rust & Rampart target profile's main biome/worldgen values. The **Full Coverage / Extra JSON** section is open by default and starts with a target mode selector plus first-pass schema builders:
 
-- **Minecraft / Data Pack**: arbitrary data pack worldgen/data JSON
-- **Forge**: data pack JSON plus Forge biome modifier JSON
-- **NeoForge**: data pack JSON plus NeoForge biome modifier JSON
-- **Fabric**: data pack JSON plus Fabric biome modification handoff JSON
+- **Minecraft / Data Pack**: common worldgen registry path/body builder plus arbitrary data pack JSON
+- **Forge**: Forge biome modifier builder plus raw Forge biome modifier JSON
+- **NeoForge**: NeoForge biome modifier builder plus raw NeoForge biome modifier JSON
+- **Fabric**: Fabric `BiomeModifications` handoff fields for code/datagen workflows
 
-This keeps loader-specific fields visible only when they matter while still allowing arbitrary new fields to ride along in the exported JSON.
+This keeps loader-specific fields visible only when they matter while still allowing arbitrary new fields to ride along in the exported JSON. The schema builders are intentionally pragmatic, not complete validators; the raw JSON fields remain the escape hatch for mod-defined Codecs and newer loader fields.
 
 See [Parameter Coverage](docs/parameter-coverage.md) for the current coverage matrix and the path toward schema-driven coverage.
 

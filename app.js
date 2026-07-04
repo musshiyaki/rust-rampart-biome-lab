@@ -437,6 +437,50 @@ const DEFAULT_STATE = {
   },
   extensions: {
     loader_mode: "minecraft",
+    minecraft_schema: {
+      registry_type: "worldgen/placed_feature",
+      file_path: "data/rust_rampart/worldgen/placed_feature/example_feature.json",
+      body: {},
+    },
+    forge_schema: {
+      name: "add_features",
+      type: "forge:add_features",
+      biomes: "#minecraft:is_overworld",
+      features: "rust_rampart:sulfur_basin",
+      step: "local_modifications",
+      spawners: [],
+      entity_types: [],
+      carvers: [],
+      spawn_costs: {},
+      climate: {},
+      effects: {},
+      raw: {},
+    },
+    neoforge_schema: {
+      name: "add_features",
+      type: "neoforge:add_features",
+      biomes: "#minecraft:is_overworld",
+      features: "rust_rampart:sulfur_basin",
+      step: "local_modifications",
+      spawners: [],
+      entity_types: [],
+      carvers: [],
+      spawn_costs: {},
+      climate: {},
+      effects: {},
+      raw: {},
+    },
+    fabric_schema: {
+      name: "add_feature_handoff",
+      operation: "add_feature",
+      biome_selector: "BiomeSelectors.foundInOverworld()",
+      generation_step: "local_modifications",
+      feature: "rust_rampart:sulfur_basin",
+      entity_type: "",
+      spawner: {},
+      carver: "",
+      notes: "",
+    },
     datapack_files: {},
     forge_biome_modifiers: {},
     neoforge_biome_modifiers: {},
@@ -554,6 +598,88 @@ const PARAM_SECTIONS = [
         ["neoforge", { ja: "NeoForge", en: "NeoForge" }],
         ["fabric", { ja: "Fabric", en: "Fabric" }],
       ])),
+      forModes(select("extensions.minecraft_schema.registry_type", "worldgen registry - Data Packレジストリ種別", "worldgen registry - Data Pack registry type", [
+        ["worldgen/biome", "worldgen/biome"],
+        ["worldgen/configured_feature", "worldgen/configured_feature"],
+        ["worldgen/placed_feature", "worldgen/placed_feature"],
+        ["worldgen/noise", "worldgen/noise"],
+        ["worldgen/density_function", "worldgen/density_function"],
+        ["dimension_type", "dimension_type"],
+        ["dimension", "dimension"],
+        ["worldgen/world_preset", "worldgen/world_preset"],
+        ["worldgen/structure", "worldgen/structure"],
+        ["worldgen/structure_set", "worldgen/structure_set"],
+        ["worldgen/template_pool", "worldgen/template_pool"],
+        ["worldgen/processor_list", "worldgen/processor_list"],
+      ]), ["minecraft"]),
+      forModes(text(
+        "extensions.minecraft_schema.file_path",
+        "data/{namespace}/... - Data Pack出力パス",
+        "data/{namespace}/... - Data Pack output path"
+      ), ["minecraft"]),
+      forModes(json(
+        "extensions.minecraft_schema.body",
+        "codec body - Data Pack JSON本文",
+        "codec body - Data Pack JSON body"
+      ), ["minecraft"]),
+      forModes(text("extensions.forge_schema.name", "Forge modifier name - ファイル名", "Forge modifier name - File name"), ["forge"]),
+      forModes(select("extensions.forge_schema.type", "Forge biome modifier type - 修飾タイプ", "Forge biome modifier type - Modifier type", [
+        ["forge:add_features", "forge:add_features"],
+        ["forge:remove_features", "forge:remove_features"],
+        ["forge:add_spawns", "forge:add_spawns"],
+        ["forge:remove_spawns", "forge:remove_spawns"],
+        ["forge:add_spawn_costs", "forge:add_spawn_costs"],
+        ["forge:remove_spawn_costs", "forge:remove_spawn_costs"],
+        ["forge:add_carvers", "forge:add_carvers"],
+        ["forge:remove_carvers", "forge:remove_carvers"],
+        ["forge:none", "forge:none"],
+      ]), ["forge"]),
+      forModes(text("extensions.forge_schema.biomes", "Forge biomes - 対象バイオーム/タグ", "Forge biomes - Target biome id or tag"), ["forge"]),
+      forModes(text("extensions.forge_schema.features", "Forge features - Feature ID/タグ", "Forge features - Feature id or tag"), ["forge"]),
+      forModes(text("extensions.forge_schema.step", "Forge step - 生成ステップ", "Forge step - Generation step"), ["forge"]),
+      forModes(json("extensions.forge_schema.spawners", "Forge spawners - スポーン追加JSON", "Forge spawners - Spawn entry JSON"), ["forge"]),
+      forModes(json("extensions.forge_schema.entity_types", "Forge entity_types - エンティティID配列", "Forge entity_types - Entity id array"), ["forge"]),
+      forModes(json("extensions.forge_schema.carvers", "Forge carvers - カーバーID配列", "Forge carvers - Carver id array"), ["forge"]),
+      forModes(json("extensions.forge_schema.spawn_costs", "Forge spawn_costs - スポーンコストJSON", "Forge spawn_costs - Spawn cost JSON"), ["forge"]),
+      forModes(json("extensions.forge_schema.climate", "Forge climate - 気候上書きJSON", "Forge climate - Climate override JSON"), ["forge"]),
+      forModes(json("extensions.forge_schema.effects", "Forge effects - 表示効果JSON", "Forge effects - Visual effects JSON"), ["forge"]),
+      forModes(json("extensions.forge_schema.raw", "Forge raw - 追加/上書きJSON", "Forge raw - Extra or override JSON"), ["forge"]),
+      forModes(text("extensions.neoforge_schema.name", "NeoForge modifier name - ファイル名", "NeoForge modifier name - File name"), ["neoforge"]),
+      forModes(select("extensions.neoforge_schema.type", "NeoForge biome modifier type - 修飾タイプ", "NeoForge biome modifier type - Modifier type", [
+        ["neoforge:add_features", "neoforge:add_features"],
+        ["neoforge:remove_features", "neoforge:remove_features"],
+        ["neoforge:add_spawns", "neoforge:add_spawns"],
+        ["neoforge:remove_spawns", "neoforge:remove_spawns"],
+        ["neoforge:add_spawn_costs", "neoforge:add_spawn_costs"],
+        ["neoforge:remove_spawn_costs", "neoforge:remove_spawn_costs"],
+        ["neoforge:add_carvers", "neoforge:add_carvers"],
+        ["neoforge:remove_carvers", "neoforge:remove_carvers"],
+        ["neoforge:none", "neoforge:none"],
+      ]), ["neoforge"]),
+      forModes(text("extensions.neoforge_schema.biomes", "NeoForge biomes - 対象バイオーム/タグ", "NeoForge biomes - Target biome id or tag"), ["neoforge"]),
+      forModes(text("extensions.neoforge_schema.features", "NeoForge features - Feature ID/タグ", "NeoForge features - Feature id or tag"), ["neoforge"]),
+      forModes(text("extensions.neoforge_schema.step", "NeoForge step - 生成ステップ", "NeoForge step - Generation step"), ["neoforge"]),
+      forModes(json("extensions.neoforge_schema.spawners", "NeoForge spawners - スポーン追加JSON", "NeoForge spawners - Spawn entry JSON"), ["neoforge"]),
+      forModes(json("extensions.neoforge_schema.entity_types", "NeoForge entity_types - エンティティID配列", "NeoForge entity_types - Entity id array"), ["neoforge"]),
+      forModes(json("extensions.neoforge_schema.carvers", "NeoForge carvers - カーバーID配列", "NeoForge carvers - Carver id array"), ["neoforge"]),
+      forModes(json("extensions.neoforge_schema.spawn_costs", "NeoForge spawn_costs - スポーンコストJSON", "NeoForge spawn_costs - Spawn cost JSON"), ["neoforge"]),
+      forModes(json("extensions.neoforge_schema.climate", "NeoForge climate - 気候上書きJSON", "NeoForge climate - Climate override JSON"), ["neoforge"]),
+      forModes(json("extensions.neoforge_schema.effects", "NeoForge effects - 表示効果JSON", "NeoForge effects - Visual effects JSON"), ["neoforge"]),
+      forModes(json("extensions.neoforge_schema.raw", "NeoForge raw - 追加/上書きJSON", "NeoForge raw - Extra or override JSON"), ["neoforge"]),
+      forModes(text("extensions.fabric_schema.name", "Fabric handoff name - 引き継ぎ名", "Fabric handoff name - Handoff name"), ["fabric"]),
+      forModes(select("extensions.fabric_schema.operation", "Fabric BiomeModifications operation - 操作", "Fabric BiomeModifications operation - Operation", [
+        ["add_feature", "add_feature"],
+        ["add_spawn", "add_spawn"],
+        ["add_carver", "add_carver"],
+        ["custom", "custom"],
+      ]), ["fabric"]),
+      forModes(text("extensions.fabric_schema.biome_selector", "Fabric BiomeSelector - 対象セレクタ", "Fabric BiomeSelector - Target selector"), ["fabric"]),
+      forModes(text("extensions.fabric_schema.generation_step", "Fabric GenerationStep - 生成ステップ", "Fabric GenerationStep - Generation step"), ["fabric"]),
+      forModes(text("extensions.fabric_schema.feature", "Fabric RegistryKey<PlacedFeature> - Feature ID", "Fabric RegistryKey<PlacedFeature> - Feature id"), ["fabric"]),
+      forModes(text("extensions.fabric_schema.entity_type", "Fabric EntityType - エンティティID", "Fabric EntityType - Entity id"), ["fabric"]),
+      forModes(json("extensions.fabric_schema.spawner", "Fabric SpawnSettings.SpawnEntry - スポーンJSON", "Fabric SpawnSettings.SpawnEntry - Spawn JSON"), ["fabric"]),
+      forModes(text("extensions.fabric_schema.carver", "Fabric ConfiguredCarver - カーバーID", "Fabric ConfiguredCarver - Carver id"), ["fabric"]),
+      forModes(text("extensions.fabric_schema.notes", "Fabric notes - 実装メモ", "Fabric notes - Implementation notes"), ["fabric"]),
       json(
         "extensions.datapack_files",
         "data pack files - 任意のworldgen/data JSONファイル",
@@ -1432,9 +1558,19 @@ function buildExport(source) {
     }
   }
 
+  const loaderMode = normalized.extensions?.loader_mode || "minecraft";
   appendExtraFiles(files, normalized.extensions?.datapack_files);
-  appendNamedJsonFiles(files, `data/${TARGET.modId}/forge/biome_modifier`, normalized.extensions?.forge_biome_modifiers);
-  appendNamedJsonFiles(files, `data/${TARGET.modId}/neoforge/biome_modifier`, normalized.extensions?.neoforge_biome_modifiers);
+  if (loaderMode === "minecraft") {
+    appendMinecraftSchemaFile(files, normalized.extensions?.minecraft_schema);
+  }
+  if (loaderMode === "forge") {
+    appendLoaderBiomeModifier(files, "forge", normalized.extensions?.forge_schema);
+    appendNamedJsonFiles(files, `data/${TARGET.modId}/forge/biome_modifier`, normalized.extensions?.forge_biome_modifiers);
+  }
+  if (loaderMode === "neoforge") {
+    appendLoaderBiomeModifier(files, "neoforge", normalized.extensions?.neoforge_schema);
+    appendNamedJsonFiles(files, `data/${TARGET.modId}/neoforge/biome_modifier`, normalized.extensions?.neoforge_biome_modifiers);
+  }
 
   return {
     target: {
@@ -1442,10 +1578,14 @@ function buildExport(source) {
       mod_version: normalized.meta.mod_version,
       mod_id: normalized.meta.mod_id,
       biome_id: normalized.biome.id,
-      loader_mode: normalized.extensions?.loader_mode || "minecraft",
+      loader_mode: loaderMode,
     },
     files,
     loader_extensions: {
+      minecraft_schema: normalized.extensions?.minecraft_schema || {},
+      forge_schema: normalized.extensions?.forge_schema || {},
+      neoforge_schema: normalized.extensions?.neoforge_schema || {},
+      fabric_schema: normalized.extensions?.fabric_schema || {},
       forge_biome_modifiers: normalized.extensions?.forge_biome_modifiers || {},
       neoforge_biome_modifiers: normalized.extensions?.neoforge_biome_modifiers || {},
       fabric_biome_modifications: normalized.extensions?.fabric_biome_modifications || {},
@@ -1466,11 +1606,60 @@ function buildExport(source) {
   };
 }
 
+function appendMinecraftSchemaFile(files, schema) {
+  if (!schema || typeof schema !== "object" || Array.isArray(schema)) return;
+  if (!isPlainObject(schema.body) || Object.keys(schema.body).length === 0) return;
+  const explicitPath = cleanExportPath(schema.file_path);
+  const fallbackPath = buildRegistryPath(schema.registry_type, schema.name);
+  const path = explicitPath || fallbackPath;
+  if (!path) return;
+  files[path] = schema.body;
+}
+
+function appendLoaderBiomeModifier(files, loader, schema) {
+  if (!schema || typeof schema !== "object" || Array.isArray(schema)) return;
+  const type = String(schema.type || "").trim();
+  if (!type || type === `${loader}:none`) return;
+  const name = cleanExportName(schema.name || type.split(":").pop() || "biome_modifier");
+  if (!name) return;
+
+  const modifier = isPlainObject(schema.raw) ? clone(schema.raw) : {};
+  modifier.type = type;
+  if (schema.biomes) modifier.biomes = schema.biomes;
+  if (schema.climate && isPlainObject(schema.climate) && Object.keys(schema.climate).length > 0) {
+    modifier.climate = schema.climate;
+  }
+  if (schema.effects && isPlainObject(schema.effects) && Object.keys(schema.effects).length > 0) {
+    modifier.effects = schema.effects;
+  }
+
+  if (type.endsWith(":add_features") || type.endsWith(":remove_features")) {
+    if (schema.features) modifier.features = schema.features;
+    if (schema.step) modifier.step = schema.step;
+  }
+  if (type.endsWith(":add_spawns")) {
+    if (Array.isArray(schema.spawners) && schema.spawners.length > 0) modifier.spawners = schema.spawners;
+  }
+  if (type.endsWith(":remove_spawns")) {
+    if (Array.isArray(schema.entity_types) && schema.entity_types.length > 0) modifier.entity_types = schema.entity_types;
+  }
+  if (type.endsWith(":add_spawn_costs") || type.endsWith(":remove_spawn_costs")) {
+    if (isPlainObject(schema.spawn_costs) && Object.keys(schema.spawn_costs).length > 0) modifier.spawn_costs = schema.spawn_costs;
+    if (Array.isArray(schema.entity_types) && schema.entity_types.length > 0) modifier.entity_types = schema.entity_types;
+  }
+  if (type.endsWith(":add_carvers") || type.endsWith(":remove_carvers")) {
+    if (Array.isArray(schema.carvers) && schema.carvers.length > 0) modifier.carvers = schema.carvers;
+    if (schema.step) modifier.step = schema.step;
+  }
+
+  files[`data/${TARGET.modId}/${loader}/biome_modifier/${name}.json`] = modifier;
+}
+
 function appendExtraFiles(files, entries) {
   if (!entries || typeof entries !== "object" || Array.isArray(entries)) return;
   for (const [path, content] of Object.entries(entries)) {
-    const cleanPath = String(path).replace(/^\/+/, "");
-    if (!cleanPath || cleanPath.includes("..")) continue;
+    const cleanPath = cleanExportPath(path);
+    if (!cleanPath) continue;
     files[cleanPath] = content;
   }
 }
@@ -1482,6 +1671,27 @@ function appendNamedJsonFiles(files, directory, entries) {
     if (!cleanId || cleanId.includes("..")) continue;
     files[`${directory}/${cleanId}.json`] = content;
   }
+}
+
+function cleanExportPath(path) {
+  const cleanPath = String(path || "").replace(/^\/+/, "");
+  if (!cleanPath || cleanPath.includes("..")) return "";
+  return cleanPath;
+}
+
+function cleanExportName(name) {
+  return String(name || "").replace(/^\/+/, "").replace(/\.json$/i, "").replace(/[^a-z0-9_./-]/gi, "_");
+}
+
+function buildRegistryPath(registryType, name) {
+  const cleanRegistry = cleanExportPath(registryType);
+  const cleanName = cleanExportName(name);
+  if (!cleanRegistry || !cleanName) return "";
+  return `data/${TARGET.modId}/${cleanRegistry}/${cleanName}.json`;
+}
+
+function isPlainObject(value) {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
 
 function buildBiomeJson(source) {
