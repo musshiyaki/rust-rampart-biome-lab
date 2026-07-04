@@ -32,18 +32,21 @@ The coverage model is:
 
 The app includes **Full Coverage / Extra JSON** fields for data that is not yet represented by fixed UI controls. This section is open by default so arbitrary coverage is part of the normal workflow, not a hidden escape hatch.
 
-| Extension field | Export behavior | Intended use |
-| --- | --- | --- |
-| `extensions.datapack_files` | Merged into the exported `files` object using each key as a repository-relative data-pack path. | Any Minecraft data pack JSON file such as additional biomes, placed features, configured features, density functions, noise settings, dimensions, or tags. |
-| `extensions.forge_biome_modifiers` | Exported under `data/{mod_id}/forge/biome_modifier/{name}.json` and copied into `loader_extensions`. | Forge biome modifier JSON. |
-| `extensions.neoforge_biome_modifiers` | Exported under `data/{mod_id}/neoforge/biome_modifier/{name}.json` and copied into `loader_extensions`. | NeoForge biome modifier JSON. |
-| `extensions.fabric_biome_modifications` | Copied into `loader_extensions`. | Fabric biome modification handoff data, because Fabric biome modifications are usually code/datagen rather than a single portable JSON format. |
+The first field is `extensions.loader_mode`, which controls which loader-specific JSON fields are shown.
+
+| Mode | Visible extension fields | Export behavior | Intended use |
+| --- | --- | --- | --- |
+| `minecraft` | `extensions.datapack_files` | Merged into the exported `files` object using each key as a repository-relative data-pack path. | Any Minecraft data pack JSON file such as additional biomes, placed features, configured features, density functions, noise settings, dimensions, or tags. |
+| `forge` | `extensions.datapack_files`, `extensions.forge_biome_modifiers` | Forge entries export under `data/{mod_id}/forge/biome_modifier/{name}.json` and are copied into `loader_extensions`. | Forge biome modifier JSON plus normal data pack files. |
+| `neoforge` | `extensions.datapack_files`, `extensions.neoforge_biome_modifiers` | NeoForge entries export under `data/{mod_id}/neoforge/biome_modifier/{name}.json` and are copied into `loader_extensions`. | NeoForge biome modifier JSON plus normal data pack files. |
+| `fabric` | `extensions.datapack_files`, `extensions.fabric_biome_modifications` | Fabric entries are copied into `loader_extensions`. | Fabric biome modification handoff data, because Fabric biome modifications are usually code/datagen rather than a single portable JSON format. |
 
 Example:
 
 ```json
 {
   "extensions": {
+    "loader_mode": "neoforge",
     "datapack_files": {
       "data/example/worldgen/noise/custom_noise.json": {
         "firstOctave": -7,

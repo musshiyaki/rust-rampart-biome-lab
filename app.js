@@ -436,6 +436,7 @@ const DEFAULT_STATE = {
     foundation_scan_depth: 6,
   },
   extensions: {
+    loader_mode: "minecraft",
     datapack_files: {},
     forge_biome_modifiers: {},
     neoforge_biome_modifiers: {},
@@ -547,26 +548,32 @@ const PARAM_SECTIONS = [
     id: "extensions",
     title: { ja: "全網羅 / 追加JSON", en: "Full Coverage / Extra JSON" },
     controls: [
+      refreshOnChange(select("extensions.loader_mode", "target mode - 対象ローダー/形式", "target mode - Target loader/format", [
+        ["minecraft", { ja: "Minecraft / Data Pack", en: "Minecraft / Data Pack" }],
+        ["forge", { ja: "Forge", en: "Forge" }],
+        ["neoforge", { ja: "NeoForge", en: "NeoForge" }],
+        ["fabric", { ja: "Fabric", en: "Fabric" }],
+      ])),
       json(
         "extensions.datapack_files",
         "data pack files - 任意のworldgen/data JSONファイル",
         "data pack files - Arbitrary worldgen/data JSON files"
       ),
-      json(
+      forModes(json(
         "extensions.forge_biome_modifiers",
         "Forge biome modifiers - Forge用バイオーム修飾JSON",
         "Forge biome modifiers - Forge biome modifier JSON"
-      ),
-      json(
+      ), ["forge"]),
+      forModes(json(
         "extensions.neoforge_biome_modifiers",
         "NeoForge biome modifiers - NeoForge用バイオーム修飾JSON",
         "NeoForge biome modifiers - NeoForge biome modifier JSON"
-      ),
-      json(
+      ), ["neoforge"]),
+      forModes(json(
         "extensions.fabric_biome_modifications",
         "Fabric biome modifications - Fabric実装引き継ぎメモJSON",
         "Fabric biome modifications - Fabric implementation handoff JSON"
-      ),
+      ), ["fabric"]),
     ],
   },
   {
@@ -992,11 +999,17 @@ function renderParameters() {
 
       const list = document.createElement("div");
       list.className = "param-list";
-      section.controls.forEach((control) => list.append(renderControl(control)));
+      section.controls.filter(shouldShowControl).forEach((control) => list.append(renderControl(control)));
       details.append(list);
       return details;
     })
   );
+}
+
+function shouldShowControl(control) {
+  if (!control.modes) return true;
+  const mode = getByPath(state, "extensions.loader_mode") || "minecraft";
+  return control.modes.includes(mode);
 }
 
 function renderControl(control) {
@@ -1065,13 +1078,16 @@ function renderControl(control) {
     control.options.forEach(([value, label]) => {
       const option = document.createElement("option");
       option.value = value;
-      option.textContent = label;
+      option.textContent = local(label);
       input.append(option);
     });
     input.value = current;
     input.addEventListener("change", () => {
       setByPath(state, control.path, input.value);
       markChanged();
+      if (control.refreshOnChange) {
+        renderParameters();
+      }
     });
     wrap.append(input);
   } else if (control.type === "json") {
@@ -1426,6 +1442,7 @@ function buildExport(source) {
       mod_version: normalized.meta.mod_version,
       mod_id: normalized.meta.mod_id,
       biome_id: normalized.biome.id,
+      loader_mode: normalized.extensions?.loader_mode || "minecraft",
     },
     files,
     loader_extensions: {
@@ -2237,6 +2254,14 @@ function json(path, ja, en) {
 
 function block(path, ja, en) {
   return { type: "block", path, label: { ja, en } };
+}
+
+function forModes(control, modes) {
+  return { ...control, modes };
+}
+
+function refreshOnChange(control) {
+  return { ...control, refreshOnChange: true };
 }
 
 function t(key) {

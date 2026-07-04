@@ -30,7 +30,7 @@ The preview is an original approximation written for this project. It does not i
 - Creative-inventory-style block picker
 - Search by block id or display name
 - Hover tooltips for block names and ids
-- Full-coverage extension fields for arbitrary data pack, Forge, NeoForge, and Fabric handoff JSON
+- Mode-specific full-coverage fields for Minecraft data packs, Forge, NeoForge, and Fabric handoff JSON
 - Local resource-pack texture loading for vanilla block icons
 - Bundled sample MOD block textures for the current target profile
 - Static GitHub Pages deployment, no backend required
@@ -59,7 +59,14 @@ Future versions can add named target profiles, datapack import/export, custom sc
 
 ## Parameter Coverage
 
-The fixed controls cover the current Rust & Rampart target profile's main biome/worldgen values. The **Full Coverage / Extra JSON** section is open by default and can carry arbitrary additional data pack files plus Forge, NeoForge, and Fabric handoff JSON so new or loader-specific fields are not blocked by the fixed UI.
+The fixed controls cover the current Rust & Rampart target profile's main biome/worldgen values. The **Full Coverage / Extra JSON** section is open by default and starts with a target mode selector:
+
+- **Minecraft / Data Pack**: arbitrary data pack worldgen/data JSON
+- **Forge**: data pack JSON plus Forge biome modifier JSON
+- **NeoForge**: data pack JSON plus NeoForge biome modifier JSON
+- **Fabric**: data pack JSON plus Fabric biome modification handoff JSON
+
+This keeps loader-specific fields visible only when they matter while still allowing arbitrary new fields to ride along in the exported JSON.
 
 See [Parameter Coverage](docs/parameter-coverage.md) for the current coverage matrix and the path toward schema-driven coverage.
 
