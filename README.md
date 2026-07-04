@@ -59,7 +59,7 @@ Future versions can add named target profiles, datapack import/export, custom sc
 
 ## Parameter Coverage
 
-The fixed controls cover the current Rust & Rampart target profile's main biome/worldgen values. The **Full Coverage Mode / Extra JSON** section can carry arbitrary additional data pack files plus Forge, NeoForge, and Fabric handoff JSON so new or loader-specific fields are not blocked by the fixed UI.
+The fixed controls cover the current Rust & Rampart target profile's main biome/worldgen values. The **Full Coverage / Extra JSON** section is open by default and can carry arbitrary additional data pack files plus Forge, NeoForge, and Fabric handoff JSON so new or loader-specific fields are not blocked by the fixed UI.
 
 See [Parameter Coverage](docs/parameter-coverage.md) for the current coverage matrix and the path toward schema-driven coverage.
 

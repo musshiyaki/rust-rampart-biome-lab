@@ -544,6 +544,32 @@ const PARAM_SECTIONS = [
     ],
   },
   {
+    id: "extensions",
+    title: { ja: "全網羅 / 追加JSON", en: "Full Coverage / Extra JSON" },
+    controls: [
+      json(
+        "extensions.datapack_files",
+        "data pack files - 任意のworldgen/data JSONファイル",
+        "data pack files - Arbitrary worldgen/data JSON files"
+      ),
+      json(
+        "extensions.forge_biome_modifiers",
+        "Forge biome modifiers - Forge用バイオーム修飾JSON",
+        "Forge biome modifiers - Forge biome modifier JSON"
+      ),
+      json(
+        "extensions.neoforge_biome_modifiers",
+        "NeoForge biome modifiers - NeoForge用バイオーム修飾JSON",
+        "NeoForge biome modifiers - NeoForge biome modifier JSON"
+      ),
+      json(
+        "extensions.fabric_biome_modifications",
+        "Fabric biome modifications - Fabric実装引き継ぎメモJSON",
+        "Fabric biome modifications - Fabric implementation handoff JSON"
+      ),
+    ],
+  },
+  {
     id: "climate",
     title: { ja: "Biome JSON / 気候", en: "Biome JSON / Climate" },
     controls: [
@@ -788,32 +814,6 @@ const PARAM_SECTIONS = [
       range("shards.foundation_scan_depth", "FOUNDATION_SCAN_DEPTH - 土台探索深さ", "FOUNDATION_SCAN_DEPTH - Foundation scan depth", 0, 24, 1),
     ],
   },
-  {
-    id: "extensions",
-    title: { ja: "全網羅モード / 追加JSON", en: "Full Coverage Mode / Extra JSON" },
-    controls: [
-      json(
-        "extensions.datapack_files",
-        "data pack files - 任意のworldgen/data JSONファイル",
-        "data pack files - Arbitrary worldgen/data JSON files"
-      ),
-      json(
-        "extensions.forge_biome_modifiers",
-        "Forge biome modifiers - Forge用バイオーム修飾JSON",
-        "Forge biome modifiers - Forge biome modifier JSON"
-      ),
-      json(
-        "extensions.neoforge_biome_modifiers",
-        "NeoForge biome modifiers - NeoForge用バイオーム修飾JSON",
-        "NeoForge biome modifiers - NeoForge biome modifier JSON"
-      ),
-      json(
-        "extensions.fabric_biome_modifications",
-        "Fabric biome modifications - Fabric実装引き継ぎメモJSON",
-        "Fabric biome modifications - Fabric implementation handoff JSON"
-      ),
-    ],
-  },
 ];
 
 const els = {
@@ -974,7 +974,7 @@ function renderParameters() {
     [...els.parameterSections.querySelectorAll("details[open]")].map((details) => details.dataset.sectionId)
   );
   if (open.size === 0) {
-    ["meta", "climate", "visual", "blocks"].forEach((id) => open.add(id));
+    ["meta", "extensions", "climate", "visual", "blocks"].forEach((id) => open.add(id));
   }
 
   els.parameterSections.replaceChildren(

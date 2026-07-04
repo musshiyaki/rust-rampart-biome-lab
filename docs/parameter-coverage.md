@@ -30,7 +30,7 @@ The coverage model is:
 
 ## Extension JSON Coverage
 
-The app includes **Full Coverage Mode / Extra JSON** fields for data that is not yet represented by fixed UI controls.
+The app includes **Full Coverage / Extra JSON** fields for data that is not yet represented by fixed UI controls. This section is open by default so arbitrary coverage is part of the normal workflow, not a hidden escape hatch.
 
 | Extension field | Export behavior | Intended use |
 | --- | --- | --- |
