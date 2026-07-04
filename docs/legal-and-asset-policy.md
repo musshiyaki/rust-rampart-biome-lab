@@ -27,7 +27,7 @@ Official Minecraft textures are not bundled in this repository.
 
 The block picker can read a user-selected local resource-pack folder in the browser. Those files stay on the user's machine. The app does not upload, store, commit, or redistribute those textures.
 
-The bundled `assets/rust_rampart/` textures are sample MOD assets for the current target profile and are part of this project.
+The built-in example MOD blocks use generated color swatches instead of bundled texture files. Users can load their own MOD block textures locally through the block picker when they need a closer preview.
 
 ## Branding Policy
 

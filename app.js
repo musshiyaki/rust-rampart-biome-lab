@@ -188,11 +188,11 @@ const BLOCKS = [
   ["minecraft:lapis_ore", "Lapis Lazuli Ore", "ラピスラズリ鉱石", "ores", "#3d4e8f"],
   ["minecraft:water", "Water", "水", "fluids", "#4edfe6"],
   ["minecraft:lava", "Lava", "溶岩", "fluids", "#e66b25"],
-  ["rust_rampart:niter_block", "Nitre Block", "硝石ブロック", "mod", "#d7d0b5", "./assets/rust_rampart/textures/block/niter_block.png"],
-  ["rust_rampart:sulfur_block", "Sulfur Block", "硫黄ブロック", "mod", "#e3cf52", "./assets/rust_rampart/textures/block/sulfur_block.png"],
-  ["rust_rampart:sulfur_deposit_block", "Sulfur Deposit", "沈着硫黄", "mod", "#f3d766", "./assets/rust_rampart/textures/block/sulfur_deposit_block.png"],
-  ["rust_rampart:sulfur_vent_block", "Sulfur Vent Block", "硫黄噴出孔ブロック", "mod", "#51483d", "./assets/rust_rampart/textures/block/sulfur_vent_block.png"],
-  ["rust_rampart:sulfur_crystal_block", "Sulfur Crystal Block", "硫黄結晶ブロック", "mod", "#f5da64", "./assets/rust_rampart/textures/block/sulfur_crystal_block.png"],
+  ["examplemod:mineral_crust", "Mineral Crust", "鉱物クラスト", "mod", "#e3cf52"],
+  ["examplemod:ash_stone", "Ash Stone", "灰岩", "mod", "#5f5a52"],
+  ["examplemod:thermal_vent", "Thermal Vent", "熱噴出孔", "mod", "#51483d"],
+  ["examplemod:mineral_deposit", "Mineral Deposit", "鉱物堆積物", "mod", "#f3d766"],
+  ["examplemod:glow_crystal", "Glow Crystal", "発光結晶", "mod", "#f5da64"],
 ].map(([id, en, ja, tab, color, texture]) => ({ id, name: { en, ja }, tab, color, texture }));
 
 const TEXTURE_PREFERENCES = {
@@ -287,18 +287,18 @@ const DEFAULT_STATE = {
       in_square: true,
       heightmap: "WORLD_SURFACE_WG",
       biome_filter: true,
-      predicate_blocks: ["rust_rampart:sulfur_vent_block", "rust_rampart:sulfur_deposit_block"],
+      predicate_blocks: ["examplemod:thermal_vent", "examplemod:mineral_deposit"],
     },
   },
   blocks: {
     base: "minecraft:andesite",
-    sulfur: "rust_rampart:sulfur_block",
+    sulfur: "examplemod:mineral_crust",
     calcite: "minecraft:calcite",
     gravel: "minecraft:gravel",
     water: "minecraft:water",
-    vent: "rust_rampart:sulfur_vent_block",
-    deposit: "rust_rampart:sulfur_deposit_block",
-    crystal: "rust_rampart:sulfur_crystal_block",
+    vent: "examplemod:thermal_vent",
+    deposit: "examplemod:mineral_deposit",
+    crystal: "examplemod:glow_crystal",
   },
   surface: {
     sulfur_shelf_y: 72,
@@ -781,24 +781,24 @@ const PARAM_SECTIONS = [
     title: { ja: "ブロック割り当て", en: "Block Assignments" },
     controls: [
       block("blocks.base", "Blocks.ANDESITE - 基盤ブロック", "Blocks.ANDESITE - Base block"),
-      block("blocks.sulfur", "ModBlocks.SULFUR_BLOCK - 硫黄面", "ModBlocks.SULFUR_BLOCK - Sulfur surface"),
+      block("blocks.sulfur", "ModBlocks.MINERAL_CRUST - 鉱物面", "ModBlocks.MINERAL_CRUST - Mineral surface"),
       block("blocks.calcite", "Blocks.CALCITE - 方解石面", "Blocks.CALCITE - Calcite surface"),
       block("blocks.gravel", "Blocks.GRAVEL - 砂利面", "Blocks.GRAVEL - Gravel surface"),
       block("blocks.water", "Blocks.WATER - 温泉水", "Blocks.WATER - Spring water"),
-      block("blocks.vent", "ModBlocks.SULFUR_VENT_BLOCK - 噴出孔", "ModBlocks.SULFUR_VENT_BLOCK - Vent block"),
-      block("blocks.deposit", "ModBlocks.SULFUR_DEPOSIT_BLOCK - 沈着硫黄", "ModBlocks.SULFUR_DEPOSIT_BLOCK - Sulfur deposit"),
-      block("blocks.crystal", "ModBlocks.SULFUR_CRYSTAL_BLOCK - 結晶柱", "ModBlocks.SULFUR_CRYSTAL_BLOCK - Crystal block"),
+      block("blocks.vent", "ModBlocks.THERMAL_VENT - 噴出孔", "ModBlocks.THERMAL_VENT - Vent block"),
+      block("blocks.deposit", "ModBlocks.MINERAL_DEPOSIT - 鉱物堆積物", "ModBlocks.MINERAL_DEPOSIT - Mineral deposit"),
+      block("blocks.crystal", "ModBlocks.GLOW_CRYSTAL - 結晶柱", "ModBlocks.GLOW_CRYSTAL - Crystal block"),
     ],
   },
   {
     id: "surface",
     title: { ja: "Surface Rules", en: "Surface Rules" },
     controls: [
-      range("surface.sulfur_shelf_y", "VerticalAnchor.absolute(72) - 硫黄棚Y", "VerticalAnchor.absolute(72) - Sulfur shelf Y", 32, 128, 1),
+      range("surface.sulfur_shelf_y", "VerticalAnchor.absolute(72) - 鉱物棚Y", "VerticalAnchor.absolute(72) - Mineral shelf Y", 32, 128, 1),
       range("surface.calcite_shelf_y", "VerticalAnchor.absolute(69) - 方解石棚Y", "VerticalAnchor.absolute(69) - Calcite shelf Y", 32, 128, 1),
       range("surface.gravel_shelf_y", "VerticalAnchor.absolute(67) - 砂利棚Y", "VerticalAnchor.absolute(67) - Gravel shelf Y", 32, 128, 1),
-      range("surface.sulfur_noise_min", "Noises.SURFACE.min - 硫黄ノイズ下限", "Noises.SURFACE.min - Sulfur noise min", -1, 1, 0.01),
-      range("surface.sulfur_noise_max", "Noises.SURFACE.max - 硫黄ノイズ上限", "Noises.SURFACE.max - Sulfur noise max", -1, 1, 0.01),
+      range("surface.sulfur_noise_min", "Noises.SURFACE.min - 鉱物ノイズ下限", "Noises.SURFACE.min - Mineral noise min", -1, 1, 0.01),
+      range("surface.sulfur_noise_max", "Noises.SURFACE.max - 鉱物ノイズ上限", "Noises.SURFACE.max - Mineral noise max", -1, 1, 0.01),
       range("surface.calcite_noise_min", "Noises.CALCITE.min - 方解石ノイズ下限", "Noises.CALCITE.min - Calcite noise min", -0.2, 0.2, 0.0025),
       range("surface.calcite_noise_max", "Noises.CALCITE.max - 方解石ノイズ上限", "Noises.CALCITE.max - Calcite noise max", -0.2, 0.2, 0.0025),
       range("surface.gravel_noise_min", "Noises.SURFACE.min - 砂利ノイズ下限", "Noises.SURFACE.min - Gravel noise min", -1, 1, 0.01),
@@ -847,10 +847,10 @@ const PARAM_SECTIONS = [
     id: "materials",
     title: { ja: "SulfurBasinFeature / 素材閾値", en: "SulfurBasinFeature / Material Thresholds" },
     controls: [
-      range("materials.floor_sulfur_threshold", "FLOOR_SULFUR_THRESHOLD - 床硫黄率", "FLOOR_SULFUR_THRESHOLD - Floor sulfur threshold", 0, 1, 0.01),
-      range("materials.vent_field_sulfur_threshold", "VENT_FIELD_SULFUR_THRESHOLD - 噴出域硫黄率", "VENT_FIELD_SULFUR_THRESHOLD - Vent-field sulfur threshold", 0, 1, 0.01),
-      range("materials.scar_sulfur_threshold", "SCAR_SULFUR_THRESHOLD - 傷跡硫黄率", "SCAR_SULFUR_THRESHOLD - Scar sulfur threshold", 0, 1, 0.01),
-      range("materials.apron_sulfur_threshold", "APRON_SULFUR_THRESHOLD - エプロン硫黄率", "APRON_SULFUR_THRESHOLD - Apron sulfur threshold", 0, 1, 0.01),
+      range("materials.floor_sulfur_threshold", "FLOOR_SULFUR_THRESHOLD - 床鉱物率", "FLOOR_SULFUR_THRESHOLD - Floor mineral threshold", 0, 1, 0.01),
+      range("materials.vent_field_sulfur_threshold", "VENT_FIELD_SULFUR_THRESHOLD - 噴出域鉱物率", "VENT_FIELD_SULFUR_THRESHOLD - Vent-field mineral threshold", 0, 1, 0.01),
+      range("materials.scar_sulfur_threshold", "SCAR_SULFUR_THRESHOLD - 傷跡鉱物率", "SCAR_SULFUR_THRESHOLD - Scar mineral threshold", 0, 1, 0.01),
+      range("materials.apron_sulfur_threshold", "APRON_SULFUR_THRESHOLD - エプロン鉱物率", "APRON_SULFUR_THRESHOLD - Apron mineral threshold", 0, 1, 0.01),
       range("materials.floor_calcite_threshold", "FLOOR_CALCITE_THRESHOLD - 床方解石率", "FLOOR_CALCITE_THRESHOLD - Floor calcite threshold", 0, 1, 0.01),
       range("materials.vent_field_calcite_threshold", "VENT_FIELD_CALCITE_THRESHOLD - 噴出域方解石率", "VENT_FIELD_CALCITE_THRESHOLD - Vent-field calcite threshold", 0, 1, 0.01),
       range("materials.wall_calcite_threshold", "WALL_CALCITE_THRESHOLD - 壁方解石率", "WALL_CALCITE_THRESHOLD - Wall calcite threshold", 0, 1, 0.01),
@@ -866,12 +866,12 @@ const PARAM_SECTIONS = [
     controls: [
       range("ventField.cluster_count_min", "ventClusters.count.min - 噴出孔クラスタ最小", "ventClusters.count.min - Min vent clusters", 0, 16, 1),
       range("ventField.cluster_count_max", "ventClusters.count.max - 噴出孔クラスタ最大", "ventClusters.count.max - Max vent clusters", 0, 24, 1),
-      range("ventField.sulfur_radius_min", "VentCluster.sulfurRadius.min - 硫黄半径最小", "VentCluster.sulfurRadius.min - Min sulfur radius", 1, 12, 1),
-      range("ventField.sulfur_radius_max", "VentCluster.sulfurRadius.max - 硫黄半径最大", "VentCluster.sulfurRadius.max - Max sulfur radius", 1, 16, 1),
-      range("ventField.sulfur_blocks_min", "VentCluster.sulfurBlocks.min - 硫黄ブロック最小", "VentCluster.sulfurBlocks.min - Min sulfur blocks", 0, 36, 1),
-      range("ventField.sulfur_blocks_max", "VentCluster.sulfurBlocks.max - 硫黄ブロック最大", "VentCluster.sulfurBlocks.max - Max sulfur blocks", 0, 48, 1),
-      range("ventField.deposit_blocks_min", "VentCluster.depositBlocks.min - 沈着硫黄最小", "VentCluster.depositBlocks.min - Min deposits", 0, 24, 1),
-      range("ventField.deposit_blocks_max", "VentCluster.depositBlocks.max - 沈着硫黄最大", "VentCluster.depositBlocks.max - Max deposits", 0, 32, 1),
+      range("ventField.sulfur_radius_min", "VentCluster.sulfurRadius.min - 鉱物半径最小", "VentCluster.sulfurRadius.min - Min mineral radius", 1, 12, 1),
+      range("ventField.sulfur_radius_max", "VentCluster.sulfurRadius.max - 鉱物半径最大", "VentCluster.sulfurRadius.max - Max mineral radius", 1, 16, 1),
+      range("ventField.sulfur_blocks_min", "VentCluster.sulfurBlocks.min - 鉱物ブロック最小", "VentCluster.sulfurBlocks.min - Min mineral blocks", 0, 36, 1),
+      range("ventField.sulfur_blocks_max", "VentCluster.sulfurBlocks.max - 鉱物ブロック最大", "VentCluster.sulfurBlocks.max - Max mineral blocks", 0, 48, 1),
+      range("ventField.deposit_blocks_min", "VentCluster.depositBlocks.min - 鉱物堆積物最小", "VentCluster.depositBlocks.min - Min deposits", 0, 24, 1),
+      range("ventField.deposit_blocks_max", "VentCluster.depositBlocks.max - 鉱物堆積物最大", "VentCluster.depositBlocks.max - Max deposits", 0, 32, 1),
       range("ventField.cluster_search_radius", "CLUSTER_SEARCH_RADIUS - 噴出孔探索半径", "CLUSTER_SEARCH_RADIUS - Vent search radius", 0, 20, 1),
       range("ventField.slope_limit", "SLOPE_LIMIT - 噴出孔斜度上限", "SLOPE_LIMIT - Vent slope limit", 0, 8, 1),
       range("ventField.vent_pool_radius", "VENT_POOL_RADIUS - 噴出孔くぼみ半径", "VENT_POOL_RADIUS - Vent pool radius", 0, 16, 1),
@@ -882,8 +882,8 @@ const PARAM_SECTIONS = [
       range("ventHalo.surface_y_variation", "SURFACE_Y_VARIATION - ハロー高低差許容", "SURFACE_Y_VARIATION - Halo surface Y tolerance", 0, 12, 1),
       range("ventHalo.calcite_min", "MIN_CALCITE - ハロー方解石最小", "MIN_CALCITE - Min halo calcite", 0, 20, 1),
       range("ventHalo.calcite_max", "MAX_CALCITE - ハロー方解石最大", "MAX_CALCITE - Max halo calcite", 0, 28, 1),
-      range("ventHalo.sulfur_min", "MIN_SULFUR - ハロー硫黄最小", "MIN_SULFUR - Min halo sulfur", 0, 40, 1),
-      range("ventHalo.sulfur_max", "MAX_SULFUR - ハロー硫黄最大", "MAX_SULFUR - Max halo sulfur", 0, 56, 1),
+      range("ventHalo.sulfur_min", "MIN_SULFUR - ハロー鉱物最小", "MIN_SULFUR - Min halo minerals", 0, 40, 1),
+      range("ventHalo.sulfur_max", "MAX_SULFUR - ハロー鉱物最大", "MAX_SULFUR - Max halo minerals", 0, 56, 1),
     ],
   },
   {
@@ -1435,7 +1435,7 @@ function generatedBlockName(blockId) {
 }
 
 function guessTab(blockId) {
-  if (blockId.startsWith("rust_rampart:")) return "mod";
+  if (blockId.startsWith("examplemod:")) return "mod";
   if (blockId.includes("ore")) return "ores";
   if (blockId.endsWith(":water") || blockId.endsWith(":lava")) return "fluids";
   if (/grass|dirt|sand|gravel|snow|ice|mud|clay|moss|nylium|netherrack|end_stone|terracotta/.test(blockId)) {
