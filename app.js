@@ -195,6 +195,14 @@ const BLOCKS = [
   ["examplemod:glow_crystal", "Glow Crystal", "発光結晶", "mod", "#f5da64"],
 ].map(([id, en, ja, tab, color, texture]) => ({ id, name: { en, ja }, tab, color, texture }));
 
+const LEGACY_BLOCK_ID_MAP = {
+  "rust_rampart:niter_block": "examplemod:ash_stone",
+  "rust_rampart:sulfur_block": "examplemod:mineral_crust",
+  "rust_rampart:sulfur_vent_block": "examplemod:thermal_vent",
+  "rust_rampart:sulfur_deposit_block": "examplemod:mineral_deposit",
+  "rust_rampart:sulfur_crystal_block": "examplemod:glow_crystal",
+};
+
 const TEXTURE_PREFERENCES = {
   "minecraft:grass_block": ["minecraft:grass_block_side", "minecraft:grass_block_top"],
   "minecraft:coarse_dirt": ["minecraft:coarse_dirt"],
@@ -979,7 +987,7 @@ const els = {
 };
 
 let language = navigator.language.toLowerCase().startsWith("ja") ? "ja" : "en";
-let state = mergeDeep(clone(DEFAULT_STATE), loadSharedState());
+let state = migrateLegacyState(mergeDeep(clone(DEFAULT_STATE), loadSharedState()));
 let appliedState = clone(state);
 let activeBlockPath = null;
 let activeBlockTab = "all";
@@ -1883,6 +1891,21 @@ function loadSharedState() {
   } catch {
     return {};
   }
+}
+
+function migrateLegacyState(value) {
+  if (typeof value === "string") {
+    return LEGACY_BLOCK_ID_MAP[value] || value;
+  }
+  if (Array.isArray(value)) {
+    return value.map((item) => migrateLegacyState(item));
+  }
+  if (value && typeof value === "object") {
+    for (const [key, item] of Object.entries(value)) {
+      value[key] = migrateLegacyState(item);
+    }
+  }
+  return value;
 }
 
 function encodeShare(value) {
